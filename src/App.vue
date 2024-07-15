@@ -1,4 +1,7 @@
-<template></template>
+<template>
+  <img src="./assets/animals/cow.jpeg" alt="" />
+  <img src="./assets/reverse.png" alt="" />
+</template>
 
 <script></script>
 
@@ -10,6 +13,11 @@ header {
 .logo {
   display: block;
   margin: 0 auto 2rem;
+}
+
+img {
+  width: 10rem;
+  border-radius: 1rem;
 }
 
 @media (min-width: 1024px) {
