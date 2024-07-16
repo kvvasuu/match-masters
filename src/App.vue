@@ -1,40 +1,56 @@
 <template>
-  <img src="./assets/animals/cow.jpeg" alt="" />
-  <img src="./assets/reverse.png" alt="" />
+  <div class="game-cont">
+    <Card v-for="card in currentCards" :card-name="card"></Card>
+  </div>
+  <button @click="startGame">Start game</button>
 </template>
 
-<script></script>
+<script>
+import Card from "./components/Card.vue";
+export default {
+  components: {
+    Card,
+  },
+  data() {
+    return {
+      availableCards: ["cat", "dog", "cow", "turtle", "bird", "deer", "monkey"],
+      currentCards: [],
+      pairsAmount: 6,
+    };
+  },
+  methods: {
+    shuffleCards() {
+      this.currentCards = [];
+      let remainingCards = [...this.availableCards];
+      let shuffledCards = [];
 
-<style lang="scss" scoped>
-header {
-  line-height: 1.5;
-}
+      for (let i = this.pairsAmount; i > 0; i--) {
+        let cardIndex = Math.floor(Math.random() * (0 - i + 1) + i);
+        let card = remainingCards.splice(cardIndex, 1).join();
+        shuffledCards.push(card);
+      }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+      shuffledCards = [...shuffledCards.flatMap((i) => [i, i])];
 
-img {
-  width: 10rem;
-  border-radius: 1rem;
-}
+      let currentIndex = shuffledCards.length;
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+      while (currentIndex != 0) {
+        let randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+        [shuffledCards[currentIndex], shuffledCards[randomIndex]] = [
+          shuffledCards[randomIndex],
+          shuffledCards[currentIndex],
+        ];
+      }
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+      this.currentCards = shuffledCards;
+    },
+    startGame() {
+      this.shuffleCards();
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped></style>
