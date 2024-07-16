@@ -2,10 +2,10 @@
   <div class="card-container" @click="flipCard">
     <div class="card" :class="{ flip: isFlipped }">
       <div class="card-face front">
-        <img src="../assets/reverse.png" alt="" />
+        <img src="../assets/reverse.png" alt="" draggable="false" />
       </div>
       <div class="card-face back">
-        <img src="../assets/animals/cat.webp" alt="" />
+        <img :src="passCardSrc" alt="" draggable="false" />
       </div>
     </div>
   </div>
@@ -21,8 +21,13 @@ export default {
   },
   methods: {
     flipCard() {
-      console.log(this.cardName);
       this.isFlipped = !this.isFlipped;
+    },
+  },
+  computed: {
+    passCardSrc() {
+      return new URL(`../assets/animals/${this.cardName}.webp`, import.meta.url)
+        .href;
     },
   },
 };
@@ -33,6 +38,7 @@ export default {
   height: 10rem;
   width: 10rem;
   perspective: 600px;
+  user-select: none;
 }
 .card {
   position: relative;
@@ -41,9 +47,12 @@ export default {
   cursor: pointer;
   transform-style: preserve-3d;
   transform-origin: center right;
-  transition: transform 1s;
+  transition: transform 1s, translate 0.3s ease;
   &.flip {
     transform: translateX(-100%) rotateY(-180deg);
+  }
+  &:hover:not(.flip) {
+    translate: 0 -0.2rem;
   }
 }
 .card-face {

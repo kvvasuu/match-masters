@@ -1,6 +1,14 @@
 <template>
   <div class="game-cont">
-    <Card v-for="card in currentCards" :card-name="card"></Card>
+    <TransitionGroup name="cards">
+      <Card
+        v-for="(card, index) in currentCards"
+        :card-name="card"
+        :key="index"
+        :class="card"
+        @click.stop="checkCard($event)"
+      ></Card>
+    </TransitionGroup>
   </div>
   <button @click="startGame">Start game</button>
 </template>
@@ -52,6 +60,23 @@ export default {
     startGame() {
       this.shuffleCards();
     },
+    checkCard(card) {
+      let cardName = card.currentTarget.classList[1];
+      if (this.step === 0) {
+        this.firstCard = cardName;
+        this.step++;
+      } else if (this.step === 1) {
+        this.secondCard = cardName;
+        this.step = 0;
+      }
+      if (this.firstCard === this.secondCard) {
+        this.currentCards.splice(this.currentCards.indexOf(cardName), 1);
+        this.currentCards.splice(this.currentCards.indexOf(cardName), 1);
+        this.firstCard = "";
+        this.secondCard = "";
+        console.log(this.currentCards);
+      } else return;
+    },
   },
 };
 </script>
@@ -67,5 +92,17 @@ export default {
 
 button {
   margin: 2rem;
+}
+.cards-move,
+.cards-enter-active,
+.cards-leave-active {
+  transition: all 0.5s ease;
+}
+.cards-enter-from,
+.cards-leave-to {
+  opacity: 0;
+}
+.cards-leave-active {
+  position: absolute;
 }
 </style>
