@@ -6,7 +6,8 @@
         :card-name="card"
         :key="index"
         :class="card"
-        @click.stop="checkCard($event)"
+        @click-card="checkCard(card)"
+        :step="passStep"
       ></Card>
     </TransitionGroup>
   </div>
@@ -61,21 +62,29 @@ export default {
       this.shuffleCards();
     },
     checkCard(card) {
-      let cardName = card.currentTarget.classList[1];
+      console.log(card);
       if (this.step === 0) {
-        this.firstCard = cardName;
+        this.firstCard = card;
         this.step++;
       } else if (this.step === 1) {
-        this.secondCard = cardName;
-        this.step = 0;
+        this.secondCard = card;
+        this.step++;
       }
+
       if (this.firstCard === this.secondCard) {
-        this.currentCards.splice(this.currentCards.indexOf(cardName), 1);
-        this.currentCards.splice(this.currentCards.indexOf(cardName), 1);
-        this.firstCard = "";
-        this.secondCard = "";
-        console.log(this.currentCards);
+        setTimeout(() => {
+          this.currentCards.splice(this.currentCards.indexOf(card), 1);
+          this.currentCards.splice(this.currentCards.indexOf(card), 1);
+          this.firstCard = "";
+          this.secondCard = "";
+          this.step = 0;
+        }, 1000);
       } else return;
+    },
+  },
+  computed: {
+    passStep() {
+      return this.step;
     },
   },
 };

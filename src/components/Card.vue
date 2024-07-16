@@ -1,6 +1,6 @@
 <template>
   <div class="card-container" @click="flipCard">
-    <div class="card" :class="{ flip: isFlipped }">
+    <div class="card" :class="{ flip: flip }" @click="checkCard">
       <div class="card-face front">
         <img src="../assets/reverse.png" alt="" draggable="false" />
       </div>
@@ -13,7 +13,8 @@
 
 <script>
 export default {
-  props: ["cardName"],
+  props: ["cardName", "step"],
+  emits: ["click-card"],
   data() {
     return {
       isFlipped: false,
@@ -23,11 +24,26 @@ export default {
     flipCard() {
       this.isFlipped = !this.isFlipped;
     },
+    checkCard() {
+      console.log(this.step);
+      if (!this.isFlipped) {
+        this.$emit("click-card", this.cardName);
+      }
+      if (this.step > 0) {
+        setTimeout(() => {
+          console.log(this.isFlipped);
+          this.isFlipped = false;
+        }, 1000);
+      }
+    },
   },
   computed: {
     passCardSrc() {
       return new URL(`../assets/animals/${this.cardName}.webp`, import.meta.url)
         .href;
+    },
+    flip() {
+      return this.isFlipped;
     },
   },
 };
