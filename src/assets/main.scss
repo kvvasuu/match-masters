@@ -4,6 +4,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 #app {
@@ -11,6 +12,5 @@ body {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin: 0 auto;
+  margin: 0;
 }

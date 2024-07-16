@@ -16,6 +16,9 @@ export default {
       availableCards: ["cat", "dog", "cow", "turtle", "bird", "deer", "monkey"],
       currentCards: [],
       pairsAmount: 6,
+      firstCard: "",
+      secondCard: "",
+      step: 0,
     };
   },
   methods: {
@@ -53,4 +56,16 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.game-cont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+button {
+  margin: 2rem;
+}
+</style>
