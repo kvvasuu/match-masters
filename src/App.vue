@@ -1,20 +1,11 @@
 <template>
   <Transition name="fade">
     <div class="game-cont" v-if="gameStarted">
-      <div
+      <Card
         v-for="(card, index) in currentCards"
-        class="card-container"
-        :key="card + index"
-      >
-        <Transition name="fade">
-          <Card
-            v-if="card !== ''"
-            :card-name="card"
-            @click-card="checkCard(card)"
-            :step="step"
-          ></Card>
-        </Transition>
-      </div>
+        :key="`${card}${index}`"
+        :card-name="`${card}-${index}`"
+      ></Card>
     </div>
   </Transition>
   <button @click="startGame">Start game</button>
@@ -31,68 +22,62 @@ export default {
       availableCards: ["cat", "dog", "cow", "turtle", "bird", "deer", "monkey"],
       currentCards: [],
       pairsAmount: 6,
-      firstCard: "",
-      secondCard: "",
-      step: 0,
       gameStarted: false,
     };
   },
   methods: {
     shuffleCards() {
-      return new Promise((resolve, reject) => {
-        this.currentCards = [];
-        let remainingCards = [...this.availableCards];
-        let shuffledCards = [];
+      this.currentCards = [];
+      let remainingCards = [...this.availableCards];
+      let shuffledCards = [];
 
-        for (let i = this.pairsAmount; i > 0; i--) {
-          let cardIndex = Math.floor(Math.random() * (0 - i + 1) + i);
-          let card = remainingCards.splice(cardIndex, 1).join();
-          shuffledCards.push(card);
-        }
-
-        shuffledCards = [...shuffledCards.flatMap((i) => [i, i])];
-
-        let currentIndex = shuffledCards.length;
-
-        while (currentIndex != 0) {
-          let randomIndex = Math.floor(Math.random() * currentIndex);
-          currentIndex--;
-
-          [shuffledCards[currentIndex], shuffledCards[randomIndex]] = [
-            shuffledCards[randomIndex],
-            shuffledCards[currentIndex],
-          ];
-        }
-        this.currentCards = shuffledCards;
-        resolve();
-      });
-    },
-    async startGame() {
-      await this.shuffleCards().then(() => {
-        this.gameStarted = true;
-      });
-    },
-    checkCard(card) {
-      console.log(card);
-      if (this.step === 0) {
-        this.firstCard = card;
-        this.step++;
-      } else if (this.step === 1) {
-        this.secondCard = card;
-        this.step = 0;
+      for (let i = this.pairsAmount; i > 0; i--) {
+        let cardIndex = Math.floor(Math.random() * (0 - i + 1) + i);
+        let card = remainingCards.splice(cardIndex, 1).join();
+        shuffledCards.push(card);
       }
 
-      if (this.firstCard === this.secondCard) {
-        setTimeout(() => {
-          let temp = this.currentCards.map((el) => (el === card ? "" : el));
-          this.currentCards = temp;
-          console.log(this.currentCards);
-          this.firstCard = "";
-          this.secondCard = "";
-          this.step = 0;
-        }, 1000);
-      } else return;
+      shuffledCards = [...shuffledCards.flatMap((i) => [i, i])];
+
+      let currentIndex = shuffledCards.length;
+
+      while (currentIndex != 0) {
+        let randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        [shuffledCards[currentIndex], shuffledCards[randomIndex]] = [
+          shuffledCards[randomIndex],
+          shuffledCards[currentIndex],
+        ];
+      }
+      this.currentCards = shuffledCards;
     },
+    startGame() {
+      this.shuffleCards();
+      this.gameStarted = true;
+    },
+    /* checkCard(card) {
+      if (this.$store.state.step === 0) {
+        this.firstCard = card;
+        this.$store.commit("stepIncrement");
+      } else if (this.$store.state.step === 1) {
+        this.secondCard = card;
+        if (
+          this.firstCard[0] === this.secondCard[0] &&
+          this.firstCard[1] !== this.secondCard[1]
+        ) {
+          setTimeout(() => {
+            let temp = this.currentCards.map((el) =>
+              el === card[0] ? "" : el
+            );
+            this.currentCards = temp;
+            this.firstCard = "";
+            this.secondCard = "";
+          }, 1500);
+        }
+        this.$store.commit("stepReset");
+      }
+    }, */
   },
 };
 </script>
@@ -104,12 +89,6 @@ export default {
   justify-content: center;
   flex-wrap: wrap;
   gap: 1rem;
-}
-.card-container {
-  height: 10rem;
-  width: 10rem;
-  perspective: 600px;
-  user-select: none;
 }
 
 button {
