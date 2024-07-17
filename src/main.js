@@ -27,12 +27,12 @@ const store = createStore({
       state.step++;
     },
     movesIncrement(state) {
-      console.log(state.moves);
       state.moves++;
+      console.log(state.moves);
     },
     scoreIncrement(state) {
-      console.log(state.score);
       state.score += 10;
+      console.log(state.score);
     },
     stepReset(state) {
       state.step = 0;
