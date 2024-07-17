@@ -1,10 +1,13 @@
 <template>
   <div class="card-container">
     <Transition name="fade">
-      <div class="card-wrapper" v-if="cardName !== ''">
+      <div class="card-wrapper" v-if="isVisible">
         <div
           class="card"
-          :class="{ flip: isReversed, active: !$store.state.loading }"
+          :class="{
+            flip: isReversed,
+            active: !$store.state.loading,
+          }"
           @click="checkCard"
         >
           <div class="card-face back">
@@ -26,6 +29,7 @@ export default {
   data() {
     return {
       isReversed: true,
+      isVisible: true,
     };
   },
   methods: {
@@ -34,6 +38,9 @@ export default {
     },
     flipAll() {
       this.isReversed = true;
+    },
+    toggleVisiblity() {
+      this.isVisible = false;
     },
     checkCard() {
       if (this.$store.state.loading) {

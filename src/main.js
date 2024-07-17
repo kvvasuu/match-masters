@@ -52,19 +52,17 @@ const store = createStore({
   },
   getters: {
     getTime(state) {
-      if (state.stopwatch.isRunning) {
-        let minutes = "";
-        let seconds = "";
-        state.stopwatch.minutes < 10
-          ? (minutes = "0" + state.stopwatch.minutes)
-          : (minutes = state.stopwatch.minutes);
+      let minutes = "";
+      let seconds = "";
+      state.stopwatch.minutes < 10
+        ? (minutes = "0" + state.stopwatch.minutes)
+        : (minutes = state.stopwatch.minutes);
 
-        state.stopwatch.seconds < 10
-          ? (seconds = "0" + state.stopwatch.seconds)
-          : (seconds = state.stopwatch.seconds);
+      state.stopwatch.seconds < 10
+        ? (seconds = "0" + state.stopwatch.seconds)
+        : (seconds = state.stopwatch.seconds);
 
-        return `${minutes}:${seconds}`;
-      } else return `${state.stopwatch.minutes}:${state.stopwatch.seconds}`;
+      return `${minutes}:${seconds}`;
     },
   },
   actions: {

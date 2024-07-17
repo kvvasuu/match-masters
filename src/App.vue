@@ -3,11 +3,7 @@
     <Scoreboard v-if="gameStarted"></Scoreboard>
   </Transition>
   <Transition name="fade" mode="out-in">
-    <div
-      class="game-cont"
-      v-if="gameStarted && !gameOver"
-      :key="this.$store.state.round"
-    >
+    <div class="game-cont" v-if="gameStarted && !gameOver">
       <Card
         v-for="(card, index) in currentCards"
         :key="`${card}${index}`"
@@ -71,23 +67,30 @@ export default {
       );
     },
     startGame() {
+      this.pairsAmount = 6;
       this.shuffleCards();
       this.$store.commit("setFirstCard", "");
       this.$store.commit("setSecondCard", "");
       this.$store.commit("stepReset");
       this.gameStarted = true;
+      this.gameOver = false;
       this.$store.dispatch("startTimer");
     },
     matchCards() {
       let first = this.$store.state.firstCard.split("-")[0];
       let second = this.$store.state.secondCard.split("-")[0];
       if (first === second) {
-        this.currentCards = this.currentCards.map((el) =>
-          el.split("-")[0] === first.split("-")[0] ? "" : el
-        );
+        this.$refs.cards
+          .find((el) => el.cardName === this.$store.state.firstCard)
+          .toggleVisiblity();
+
+        this.$refs.cards
+          .find((el) => el.cardName === this.$store.state.secondCard)
+          .toggleVisiblity();
         this.$store.dispatch("addScore", 10);
         this.$store.commit("setFirstCard", "");
         this.$store.commit("setSecondCard", "");
+        this.pairsAmount--;
       } else {
         this.$store.commit("setFirstCard", "");
         this.$store.commit("setSecondCard", "");
@@ -95,7 +98,7 @@ export default {
       this.$refs.cards.forEach((el) => {
         el.flipAll();
       });
-      if (this.currentCards.every((el) => el === "")) {
+      if (this.pairsAmount <= 0) {
         this.$store.commit("roundIncrement");
         this.$store.dispatch("pauseTimer");
         this.gameOver = true;
@@ -112,7 +115,8 @@ export default {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 2rem;
+  width: 46rem;
 }
 
 button {
