@@ -43,6 +43,7 @@ export default {
         this.flipCard();
         this.$store.commit("setFirstCard", this.cardName);
         this.$store.commit("stepIncrement");
+        this.$store.commit("movesIncrement");
       } else if (this.$store.state.step === 1) {
         if (this.$store.state.firstCard === this.cardName) {
           this.flipCard();
@@ -50,6 +51,7 @@ export default {
           this.$store.commit("stepReset");
         } else {
           this.flipCard();
+          this.$store.commit("movesIncrement");
           this.$store.dispatch("setSecondCard", this.cardName).then(() => {
             this.$store.commit("stepReset");
             this.$emit("checkCards");

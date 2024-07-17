@@ -12,6 +12,8 @@ const store = createStore({
       step: 0,
       round: 1,
       loading: false,
+      moves: 0,
+      score: 0,
     };
   },
   mutations: {
@@ -23,6 +25,14 @@ const store = createStore({
     },
     stepIncrement(state) {
       state.step++;
+    },
+    movesIncrement(state) {
+      console.log(state.moves);
+      state.moves++;
+    },
+    scoreIncrement(state) {
+      console.log(state.score);
+      state.score += 10;
     },
     stepReset(state) {
       state.step = 0;

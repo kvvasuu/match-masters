@@ -68,10 +68,10 @@ export default {
       let first = this.$store.state.firstCard.split("-")[0];
       let second = this.$store.state.secondCard.split("-")[0];
       if (first === second) {
-        console.log(first);
         this.currentCards = this.currentCards.map((el) =>
           el.split("-")[0] === first.split("-")[0] ? "" : el
         );
+        this.$store.commit("scoreIncrement");
         this.$store.commit("setFirstCard", "");
         this.$store.commit("setSecondCard", "");
       } else {
