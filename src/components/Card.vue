@@ -1,12 +1,10 @@
 <template>
-  <div class="card-container" @click="flipCard">
-    <div class="card" :class="{ flip: flip }" @click="checkCard">
-      <div class="card-face front">
-        <img src="../assets/reverse.png" alt="" draggable="false" />
-      </div>
-      <div class="card-face back">
-        <img :src="passCardSrc" alt="" draggable="false" />
-      </div>
+  <div class="card" :class="{ flip: isFlipped }" @click="checkCard">
+    <div class="card-face back">
+      <img src="../assets/reverse.png" alt="" draggable="false" />
+    </div>
+    <div class="card-face front">
+      <img :src="passCardSrc" alt="" draggable="false" />
     </div>
   </div>
 </template>
@@ -17,7 +15,7 @@ export default {
   emits: ["click-card"],
   data() {
     return {
-      isFlipped: false,
+      isFlipped: true,
     };
   },
   methods: {
@@ -25,15 +23,10 @@ export default {
       this.isFlipped = !this.isFlipped;
     },
     checkCard() {
-      console.log(this.step);
-      if (!this.isFlipped) {
-        this.$emit("click-card", this.cardName);
-      }
-      if (this.step > 0) {
-        setTimeout(() => {
-          console.log(this.isFlipped);
-          this.isFlipped = false;
-        }, 1000);
+      this.$emit("click-card", this.cardName);
+
+      if (this.isFlipped) {
+        this.flipCard();
       }
     },
   },
@@ -42,20 +35,11 @@ export default {
       return new URL(`../assets/animals/${this.cardName}.webp`, import.meta.url)
         .href;
     },
-    flip() {
-      return this.isFlipped;
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.card-container {
-  height: 10rem;
-  width: 10rem;
-  perspective: 600px;
-  user-select: none;
-}
 .card {
   position: relative;
   width: 100%;
