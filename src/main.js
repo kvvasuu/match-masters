@@ -52,16 +52,19 @@ const store = createStore({
   },
   getters: {
     getTime(state) {
-      let minutes = "";
-      let seconds = "";
-      state.stopwatch.minutes < 10
-        ? (minutes = "0" + state.stopwatch.minutes)
-        : (minutes = state.stopwatch.minutes);
+      if (state.stopwatch.isRunning) {
+        let minutes = "";
+        let seconds = "";
+        state.stopwatch.minutes < 10
+          ? (minutes = "0" + state.stopwatch.minutes)
+          : (minutes = state.stopwatch.minutes);
 
-      state.stopwatch.seconds < 10
-        ? (seconds = "0" + state.stopwatch.seconds)
-        : (seconds = state.stopwatch.seconds);
-      return `${minutes}:${seconds}`;
+        state.stopwatch.seconds < 10
+          ? (seconds = "0" + state.stopwatch.seconds)
+          : (seconds = state.stopwatch.seconds);
+
+        return `${minutes}:${seconds}`;
+      } else return `${state.stopwatch.minutes}:${state.stopwatch.seconds}`;
     },
   },
   actions: {
@@ -84,6 +87,12 @@ const store = createStore({
           clearInterval(interval);
         }
       }, 50);
+    },
+    pauseTimer(context) {
+      context.commit("pauseTimer");
+    },
+    startTimer(context) {
+      context.commit("startTimer");
     },
   },
 });

@@ -76,7 +76,7 @@ export default {
       this.$store.commit("setSecondCard", "");
       this.$store.commit("stepReset");
       this.gameStarted = true;
-      this.$store.commit("startTimer");
+      this.$store.dispatch("startTimer");
     },
     matchCards() {
       let first = this.$store.state.firstCard.split("-")[0];
@@ -97,10 +97,10 @@ export default {
       });
       if (this.currentCards.every((el) => el === "")) {
         this.$store.commit("roundIncrement");
-        this.$store.commit("pauseTimer");
+        this.$store.dispatch("pauseTimer");
         this.gameOver = true;
       }
-      this.$store.commit("pauseTimer");
+      this.$store.dispatch("pauseTimer");
     },
   },
 };
