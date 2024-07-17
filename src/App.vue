@@ -100,6 +100,7 @@ export default {
         this.$store.commit("pauseTimer");
         this.gameOver = true;
       }
+      this.$store.commit("pauseTimer");
     },
   },
 };
