@@ -1,6 +1,13 @@
 <template>
+  <Transition name="slide-top">
+    <Scoreboard v-if="gameStarted"></Scoreboard>
+  </Transition>
   <Transition name="fade" mode="out-in">
-    <div class="game-cont" v-if="gameStarted" :key="this.$store.state.round">
+    <div
+      class="game-cont"
+      v-if="gameStarted && !gameOver"
+      :key="this.$store.state.round"
+    >
       <Card
         v-for="(card, index) in currentCards"
         :key="`${card}${index}`"
@@ -9,15 +16,21 @@
         @check-cards="matchCards"
       ></Card>
     </div>
+    <div class="game-cont" v-else-if="gameOver">
+      <button @click="startGame">Next round!</button>
+    </div>
   </Transition>
-  <button @click="startGame">Start game</button>
+  <button @click="startGame" v-if="!gameStarted">Start game</button>
 </template>
 
 <script>
 import Card from "./components/Card.vue";
+import Scoreboard from "./components/Scoreboard.vue";
+
 export default {
   components: {
     Card,
+    Scoreboard,
   },
   data() {
     return {
@@ -25,6 +38,7 @@ export default {
       currentCards: [],
       pairsAmount: 6,
       gameStarted: false,
+      gameOver: false,
     };
   },
   methods: {
@@ -57,12 +71,12 @@ export default {
       );
     },
     startGame() {
-      this.gameStarted = false;
       this.shuffleCards();
       this.$store.commit("setFirstCard", "");
       this.$store.commit("setSecondCard", "");
       this.$store.commit("stepReset");
       this.gameStarted = true;
+      this.$store.commit("startTimer");
     },
     matchCards() {
       let first = this.$store.state.firstCard.split("-")[0];
@@ -71,7 +85,7 @@ export default {
         this.currentCards = this.currentCards.map((el) =>
           el.split("-")[0] === first.split("-")[0] ? "" : el
         );
-        this.$store.commit("scoreIncrement");
+        this.$store.dispatch("addScore", 10);
         this.$store.commit("setFirstCard", "");
         this.$store.commit("setSecondCard", "");
       } else {
@@ -81,6 +95,11 @@ export default {
       this.$refs.cards.forEach((el) => {
         el.flipAll();
       });
+      if (this.currentCards.every((el) => el === "")) {
+        this.$store.commit("roundIncrement");
+        this.$store.commit("pauseTimer");
+        this.gameOver = true;
+      }
     },
   },
 };
@@ -97,6 +116,16 @@ export default {
 
 button {
   margin: 2rem;
+}
+
+.slide-top-enter-active,
+.slide-top-leave-active {
+  transition: opacity 1s ease;
+}
+.slide-top-enter-from,
+.slide-top-leave-to {
+  transform: translateY(10rem);
+  opacity: 0;
 }
 
 .fade-enter-active,
