@@ -2,7 +2,11 @@
   <div class="card-container">
     <Transition name="fade">
       <div class="card-wrapper" v-if="cardName !== ''">
-        <div class="card" :class="{ flip: isReversed }" @click="checkCard">
+        <div
+          class="card"
+          :class="{ flip: isReversed, active: !$store.state.loading }"
+          @click="checkCard"
+        >
           <div class="card-face back">
             <img src="../assets/reverse.png" alt="" draggable="false" />
           </div>
@@ -18,7 +22,7 @@
 <script>
 export default {
   props: ["cardName"],
-  emits: ["click-card"],
+  emits: ["checkCards"],
   data() {
     return {
       isReversed: true,
@@ -28,26 +32,28 @@ export default {
     flipCard() {
       this.isReversed = !this.isReversed;
     },
+    flipAll() {
+      this.isReversed = true;
+    },
     checkCard() {
-      if (
-        this.$store.state.step === 0 &&
-        this.$store.state.firstCardCard === ""
-      ) {
+      if (this.$store.state.loading) {
+        return;
+      }
+      if (this.$store.state.step === 0 && this.$store.state.firstCard === "") {
+        this.flipCard();
         this.$store.commit("setFirstCard", this.cardName);
         this.$store.commit("stepIncrement");
-        this.flipCard();
       } else if (this.$store.state.step === 1) {
         if (this.$store.state.firstCard === this.cardName) {
           this.flipCard();
           this.$store.commit("setFirstCard", "");
           this.$store.commit("stepReset");
-        } else if (this.$store.state.secondCard === this.cardName) {
-          this.flipCard();
-          this.$store.commit("setSecondCard", "");
         } else {
-          this.$store.commit("setSecondCard", this.cardName);
-          this.$store.commit("stepReset");
           this.flipCard();
+          this.$store.dispatch("setSecondCard", this.cardName).then(() => {
+            this.$store.commit("stepReset");
+            this.$emit("checkCards");
+          });
         }
       }
     },
@@ -74,14 +80,16 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  cursor: pointer;
   transform-style: preserve-3d;
   transform-origin: center right;
   transition: transform 1s, translate 0.3s ease;
   &.flip {
     transform: translateX(-100%) rotateY(-180deg);
-    &:hover {
-      translate: 0 -0.2rem;
+    &.active {
+      cursor: pointer;
+      &:hover {
+        translate: 0 -0.2rem;
+      }
     }
   }
 }

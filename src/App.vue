@@ -1,10 +1,12 @@
 <template>
-  <Transition name="fade">
-    <div class="game-cont" v-if="gameStarted">
+  <Transition name="fade" mode="out-in">
+    <div class="game-cont" v-if="gameStarted" :key="this.$store.state.round">
       <Card
         v-for="(card, index) in currentCards"
         :key="`${card}${index}`"
-        :card-name="`${card}-${index}`"
+        ref="cards"
+        :card-name="card"
+        @check-cards="matchCards"
       ></Card>
     </div>
   </Transition>
@@ -50,34 +52,36 @@ export default {
           shuffledCards[currentIndex],
         ];
       }
-      this.currentCards = shuffledCards;
+      this.currentCards = shuffledCards.map(
+        (el, index) => (el = `${el}-${index}`)
+      );
     },
     startGame() {
+      this.gameStarted = false;
       this.shuffleCards();
+      this.$store.commit("setFirstCard", "");
+      this.$store.commit("setSecondCard", "");
+      this.$store.commit("stepReset");
       this.gameStarted = true;
     },
-    /* checkCard(card) {
-      if (this.$store.state.step === 0) {
-        this.firstCard = card;
-        this.$store.commit("stepIncrement");
-      } else if (this.$store.state.step === 1) {
-        this.secondCard = card;
-        if (
-          this.firstCard[0] === this.secondCard[0] &&
-          this.firstCard[1] !== this.secondCard[1]
-        ) {
-          setTimeout(() => {
-            let temp = this.currentCards.map((el) =>
-              el === card[0] ? "" : el
-            );
-            this.currentCards = temp;
-            this.firstCard = "";
-            this.secondCard = "";
-          }, 1500);
-        }
-        this.$store.commit("stepReset");
+    matchCards() {
+      let first = this.$store.state.firstCard.split("-")[0];
+      let second = this.$store.state.secondCard.split("-")[0];
+      if (first === second) {
+        console.log(first);
+        this.currentCards = this.currentCards.map((el) =>
+          el.split("-")[0] === first.split("-")[0] ? "" : el
+        );
+        this.$store.commit("setFirstCard", "");
+        this.$store.commit("setSecondCard", "");
+      } else {
+        this.$store.commit("setFirstCard", "");
+        this.$store.commit("setSecondCard", "");
       }
-    }, */
+      this.$refs.cards.forEach((el) => {
+        el.flipAll();
+      });
+    },
   },
 };
 </script>

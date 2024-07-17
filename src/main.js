@@ -10,6 +10,8 @@ const store = createStore({
       firstCard: "",
       secondCard: "",
       step: 0,
+      round: 1,
+      loading: false,
     };
   },
   mutations: {
@@ -24,6 +26,21 @@ const store = createStore({
     },
     stepReset(state) {
       state.step = 0;
+    },
+    setLoading(state) {
+      state.loading = !state.loading;
+    },
+  },
+  actions: {
+    setSecondCard(context, card) {
+      return new Promise((resolve, reject) => {
+        context.commit("setLoading");
+        setTimeout(() => {
+          context.commit("setSecondCard", card);
+          context.commit("setLoading");
+          resolve();
+        }, 1000);
+      });
     },
   },
 });
