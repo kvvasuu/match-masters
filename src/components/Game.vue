@@ -23,7 +23,7 @@
           </select>
         </div>
         <Transition name="fade" mode="out-in">
-          <div class="category cont" v-if="difficulty == 1">
+          <div class="category cont" v-if="difficulty === 1">
             <label for="category">Category:</label>
             <select name="category" id="category">
               <option value="animals">Animals</option>
@@ -54,7 +54,7 @@ export default {
       pairsAmount: 6,
       gameStarted: false,
       gameOver: false,
-      difficulty: 1,
+      difficulty: this.$store.state.difficulty,
       category: "animals",
     };
   },
@@ -98,7 +98,7 @@ export default {
       this.gameOver = false;
     },
     setDifficulty(value) {
-      this.$store.dispatch("setDifficulty", value);
+      this.$store.dispatch("setDifficulty", value.target.value);
     },
   },
 };

@@ -17,7 +17,7 @@ const store = createStore({
       score: 0,
       stopwatch: useTimer(),
       nickname: "",
-      difficulty: "1", //1 - easy, 2 - medium, 3 - hard
+      difficulty: 1, //1 - easy, 2 - medium, 3 - hard
       gameMode: "", // practice or compete
     };
   },
