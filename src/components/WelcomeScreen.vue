@@ -38,7 +38,7 @@ export default {
 
 <style lang="scss" scoped>
 .welcome-screen {
-  width: 80%;
+  width: 50rem;
 }
 
 .buttons {
