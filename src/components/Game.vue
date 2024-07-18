@@ -8,7 +8,29 @@
       <div
         class="practice-settings"
         v-if="$store.state.gameMode === 'practice'"
-      ></div>
+      >
+        <div class="difficulty cont">
+          <label for="difficulty">Difficulty:</label>
+          <select
+            name="difficulty"
+            id="difficulty"
+            @change="setDifficulty"
+            v-model="difficulty"
+          >
+            <option value="1">Easy</option>
+            <option value="2">Medium</option>
+            <option value="3">Hard</option>
+          </select>
+        </div>
+        <Transition name="fade" mode="out-in">
+          <div class="category cont" v-if="difficulty == 1">
+            <label for="category">Category:</label>
+            <select name="category" id="category">
+              <option value="animals">Animals</option>
+            </select>
+          </div>
+        </Transition>
+      </div>
       <div class="compete-settings" v-else></div>
     </GameSettings>
   </Transition>
@@ -32,6 +54,8 @@ export default {
       pairsAmount: 6,
       gameStarted: false,
       gameOver: false,
+      difficulty: 1,
+      category: "animals",
     };
   },
   methods: {
@@ -73,38 +97,59 @@ export default {
       this.gameStarted = true;
       this.gameOver = false;
     },
-    matchCards() {
-      let first = this.$store.state.firstCard.split("-")[0];
-      let second = this.$store.state.secondCard.split("-")[0];
-      if (first === second) {
-        this.$refs.cards
-          .find((el) => el.cardName === this.$store.state.firstCard)
-          .toggleVisiblity();
-
-        this.$refs.cards
-          .find((el) => el.cardName === this.$store.state.secondCard)
-          .toggleVisiblity();
-        this.$store.dispatch("addScore", 10);
-        this.$store.commit("setFirstCard", "");
-        this.$store.commit("setSecondCard", "");
-        this.pairsAmount--;
-      } else {
-        this.$store.commit("setFirstCard", "");
-        this.$store.commit("setSecondCard", "");
-      }
-      this.$refs.cards.forEach((el) => {
-        el.flipAll();
-      });
-      if (this.pairsAmount <= 0) {
-        this.$store.commit("roundIncrement");
-        this.gameOver = true;
-      }
+    setDifficulty(value) {
+      this.$store.dispatch("setDifficulty", value);
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.cont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0 0 0;
+}
+
+label {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: rgb(22, 22, 22);
+}
+
+select {
+  font-size: 1rem;
+  background: #ffbf00;
+  color: #808836;
+  border: 0.3rem solid #808836;
+  padding: 0.9rem 1.6rem;
+  display: flex;
+  align-items: center;
+  margin: 0 2rem;
+  cursor: pointer;
+  border-radius: 1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  user-select: none;
+  appearance: none;
+  border: 0;
+  outline: 0;
+  &::-ms-expand {
+    display: none;
+  }
+  &:focus {
+    outline: none;
+  }
+  option {
+    color: inherit;
+    font-weight: bold;
+    &:hover {
+      background-color: #ffd863;
+    }
+  }
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 1s ease;

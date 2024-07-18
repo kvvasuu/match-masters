@@ -57,6 +57,9 @@ const store = createStore({
     setGameMode(state, payload) {
       state.gameMode = payload;
     },
+    setDifficulty(state, payload) {
+      state.difficulty = payload;
+    },
   },
   getters: {
     getTime(state) {
@@ -104,6 +107,9 @@ const store = createStore({
     },
     setGameMode(context, payload) {
       context.commit("setGameMode", payload);
+    },
+    setDifficulty(context, payload) {
+      context.commit("setDifficulty", payload);
     },
   },
 });

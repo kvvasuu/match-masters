@@ -3,9 +3,9 @@
     <div class="title">
       <h1>{{ $store.state.gameMode }}</h1>
     </div>
-    <slot></slot>
+    <slot> </slot>
     <div class="buttons">
-      <button class="icon" @click="startGame" title="BACK">
+      <button class="icon" @click="goBack" title="BACK">
         <i class="fa-solid fa-arrow-left"></i>
       </button>
       <button @click="startGame">Start game</button>
@@ -19,6 +19,9 @@ export default {
   methods: {
     startGame() {
       this.$emit("startGame");
+    },
+    goBack() {
+      this.$store.dispatch("setGameMode", "");
     },
   },
 };
@@ -57,7 +60,7 @@ button {
   padding: 0.9rem 1.6rem;
   display: flex;
   align-items: center;
-  margin: 0 4rem 0 2rem;
+  margin: 0 0 0 2rem;
   cursor: pointer;
   border-radius: 3rem;
   font-weight: bold;
