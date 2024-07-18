@@ -5,7 +5,7 @@ import App from "./App.vue";
 import { createStore } from "vuex";
 import { useStopwatch } from "vue-timer-hook";
 
-const store = createStore({
+const gameLogic = {
   state() {
     return {
       firstCard: "",
@@ -91,6 +91,27 @@ const store = createStore({
     },
     startTimer(context) {
       context.commit("startTimer");
+    },
+  },
+};
+
+const store = createStore({
+  modules: {
+    gameLogic: gameLogic,
+  },
+  state() {
+    return {
+      nickname: "",
+    };
+  },
+  mutations: {
+    setNickname(state, payload) {
+      state.nickname = payload;
+    },
+  },
+  actions: {
+    setNickname(context, payload) {
+      context.commit("setNickname", payload);
     },
   },
 });
