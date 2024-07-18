@@ -1,6 +1,8 @@
 <template>
   <div class="welcome-screen">
-    <h1>Match Masters</h1>
+    <div class="logo">
+      <img src="../../logo.png" alt="Match Masters" />
+    </div>
     <div class="buttons">
       <button
         id="practice"
@@ -31,6 +33,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.welcome-screen {
+  width: 80%;
+}
+
+.logo {
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 1s ease;
