@@ -132,6 +132,7 @@ button {
   gap: 2rem;
   width: 46rem;
   padding: 2rem;
+  margin: 4rem 0 0 0;
   border-radius: 2rem;
   background-color: #ffffff60;
   backdrop-filter: blur(5px);

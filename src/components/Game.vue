@@ -71,7 +71,7 @@ export default {
         "monkey",
       ],
       currentCards: [],
-      pairsAmount: 6,
+      pairsAmount: 8,
       gameStarted: false,
       gameOver: false,
       difficulty: this.$store.state.difficulty,
@@ -84,10 +84,11 @@ export default {
       let remainingCards = [...this.availableCards];
       let shuffledCards = [];
 
-      for (let i = this.pairsAmount; i > 0; i--) {
-        let cardIndex = Math.floor(Math.random() * (0 - 13 + 1) + 13);
+      for (let i = 0; i < this.pairsAmount; i++) {
+        let cardIndex = Math.floor(Math.random() * (13 - i));
         console.log(cardIndex);
         let card = remainingCards.splice(cardIndex, 1).join();
+        console.log(remainingCards);
         shuffledCards.push(card);
       }
 
@@ -110,7 +111,7 @@ export default {
     },
     startGame() {
       this.$store.dispatch("restartTimer");
-      this.pairsAmount = 6;
+      this.pairsAmount = 8;
       this.shuffleCards();
       this.$store.commit("setFirstCard", "");
       this.$store.commit("setSecondCard", "");

@@ -5,7 +5,7 @@
         <div
           class="card"
           :class="{
-            flip: isReversed,
+            flip: !isReversed,
             active: !$store.state.loading,
           }"
           @click="checkCard"
