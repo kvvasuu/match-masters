@@ -6,6 +6,7 @@
         game0ver = true;
         gameStarted = false;
       "
+      @next-round="startGame"
       v-if="gameStarted && !gameOver"
     ></Practice>
     <GameSettings v-else @start-game="startGame">

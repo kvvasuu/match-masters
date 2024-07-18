@@ -26,7 +26,7 @@ export default {
     Scoreboard,
   },
   props: ["currentCards"],
-  emits: ["goBack"],
+  emits: ["goBack", "nextRound"],
   data() {
     return {
       pairsAmount: 6,
@@ -58,7 +58,8 @@ export default {
       });
       if (this.pairsAmount <= 0) {
         this.$store.commit("roundIncrement");
-        this.gameOver = true;
+        this.roundOver = true;
+        this.$emit("nextRound");
       }
     },
     goBack() {
