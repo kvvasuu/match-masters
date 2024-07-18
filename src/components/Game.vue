@@ -1,9 +1,15 @@
 <template>
   <Transition name="fade" mode="out-in">
-    <Board v-if="gameStarted && !gameOver"></Board>
+    <Board
+      :current-cards="currentCards"
+      v-if="gameStarted && !gameOver"
+    ></Board>
     <GameSettings v-else @start-game="startGame">
-      <div class="practice" v-if="gameMode === 'practice'"></div>
-      <div class="compete" v-else></div>
+      <div
+        class="practice-settings"
+        v-if="$store.state.gameMode === 'practice'"
+      ></div>
+      <div class="compete-settings" v-else></div>
     </GameSettings>
   </Transition>
 </template>
@@ -19,7 +25,6 @@ export default {
     Board,
     GameSettings,
   },
-  props: ["gameMode"],
   data() {
     return {
       availableCards: ["cat", "dog", "cow", "turtle", "bird", "deer", "monkey"],
@@ -100,15 +105,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.game-cont {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 2rem;
-  width: 46rem;
-}
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 1s ease;

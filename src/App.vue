@@ -1,7 +1,7 @@
 <template>
   <Transition name="fade" mode="out-in">
     <WelcomeScreen v-if="!$store.state.gameMode"></WelcomeScreen>
-    <Game :game-mode="$store.state.gameMode" v-else></Game>
+    <Game v-else></Game>
   </Transition>
 </template>
 

@@ -1,11 +1,16 @@
-:root {
-  font-size: 16px;
-}
-
 $primary-color: #ffbf00;
 $primary-color-dark: #ff9a00;
 $seconday-color: #808836;
 $details-color: #d10363;
+
+@font-face {
+  font-family: Plarjoek;
+  src: url(./fonts/Plarjoek.ttf);
+}
+
+:root {
+  font-size: 16px;
+}
 
 body {
   background: url("./background.jpeg");
@@ -30,4 +35,6 @@ body {
   justify-content: center;
   flex-direction: column;
   margin: 0;
+  height: 100%;
+  width: 100%;
 }

@@ -1,9 +1,7 @@
 <template>
-  <Transition name="slide-top">
-    <Scoreboard v-if="gameStarted"></Scoreboard>
-  </Transition>
-  <Transition name="fade" mode="out-in">
-    <div class="game-cont" v-if="gameStarted && !gameOver">
+  <div class="board">
+    <Scoreboard></Scoreboard>
+    <div class="game-cont" v-if="!roundOver">
       <Card
         v-for="(card, index) in currentCards"
         :key="`${card}${index}`"
@@ -12,11 +10,10 @@
         @check-cards="matchCards"
       ></Card>
     </div>
-    <div class="game-cont" v-else-if="gameOver">
+    <div class="game-cont" v-else>
       <button @click="startGame">Next round!</button>
     </div>
-  </Transition>
-  <button @click="startGame" v-if="!gameStarted">Start game</button>
+  </div>
 </template>
 
 <script>
@@ -28,10 +25,11 @@ export default {
     Card,
     Scoreboard,
   },
+  props: ["currentCards"],
   data() {
     return {
-      currentCards: [],
       pairsAmount: 6,
+      roundOver: false,
     };
   },
   methods: {
@@ -67,6 +65,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.board {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.game-cont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  width: 46rem;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 1s ease;
