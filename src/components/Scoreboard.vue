@@ -1,7 +1,7 @@
 <template>
   <div class="scoreboard">
     <div class="container score">{{ $store.state.score }}</div>
-    <div class="container timer">
+    <div class="container timer" @click="$store.dispatch('restartTimer')">
       {{ $store.getters.getTime }}
     </div>
     <div class="container moves">{{ $store.state.moves }}</div>
