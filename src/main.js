@@ -17,9 +17,59 @@ const store = createStore({
       score: 0,
       stopwatch: useTimer(),
       nickname: "",
-      difficulty: 1, //1 - easy, 2 - medium, 3 - hard
+      difficulty: "1", //1 - easy, 2 - medium, 3 - hard
       gameMode: "", // practice or compete
+      category: "animals", // "animals" is default
+      availableCards: {
+        animals: [
+          "bee",
+          "dolphin",
+          "elephant",
+          "frog",
+          "hog",
+          "snail",
+          "tiger",
+          "cat",
+          "dog",
+          "cow",
+          "turtle",
+          "bird",
+          "deer",
+          "monkey",
+        ],
+      },
     };
+  },
+  getters: {
+    getTime(state) {
+      if (state.stopwatch.isRunning) {
+        let minutes = "";
+        let seconds = "";
+        state.stopwatch.minutes < 10
+          ? (minutes = "0" + state.stopwatch.minutes)
+          : (minutes = state.stopwatch.minutes);
+
+        state.stopwatch.seconds < 10
+          ? (seconds = "0" + state.stopwatch.seconds)
+          : (seconds = state.stopwatch.seconds);
+
+        return `${minutes}:${seconds}`;
+      } else return `${state.stopwatch.minutes}:${state.stopwatch.seconds}`;
+    },
+    getCategoriesList(state) {
+      return Object.keys(state.availableCards);
+    },
+    getCards(state) {
+      switch (state.difficulty) {
+        case "1":
+          return state.availableCards[state.category];
+        case "2":
+          let keys = Object.keys(state.availableCards);
+          return state.availableCards[keys[(keys.length * Math.random()) << 0]];
+        case "3":
+          return [].concat(...Object.values(state.availableCards));
+      }
+    },
   },
   mutations: {
     setFirstCard(state, card) {
@@ -65,23 +115,6 @@ const store = createStore({
     },
     setDifficulty(state, payload) {
       state.difficulty = payload;
-    },
-  },
-  getters: {
-    getTime(state) {
-      if (state.stopwatch.isRunning) {
-        let minutes = "";
-        let seconds = "";
-        state.stopwatch.minutes < 10
-          ? (minutes = "0" + state.stopwatch.minutes)
-          : (minutes = state.stopwatch.minutes);
-
-        state.stopwatch.seconds < 10
-          ? (seconds = "0" + state.stopwatch.seconds)
-          : (seconds = state.stopwatch.seconds);
-
-        return `${minutes}:${seconds}`;
-      } else return `${state.stopwatch.minutes}:${state.stopwatch.seconds}`;
     },
   },
   actions: {

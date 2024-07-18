@@ -28,10 +28,15 @@
           </select>
         </div>
         <Transition name="fade" mode="out-in">
-          <div class="category cont" v-if="difficulty === 1">
+          <div class="category cont" v-if="difficulty === '1'">
             <label for="category">Category:</label>
             <select name="category" id="category">
-              <option value="animals">Animals</option>
+              <option
+                v-for="category in $store.getters.getCategoriesList"
+                :value="category"
+              >
+                {{ category }}
+              </option>
             </select>
           </div>
         </Transition>
@@ -54,24 +59,8 @@ export default {
   },
   data() {
     return {
-      availableCards: [
-        "bee",
-        "dolphin",
-        "elephant",
-        "frog",
-        "hog",
-        "snail",
-        "tiger",
-        "cat",
-        "dog",
-        "cow",
-        "turtle",
-        "bird",
-        "deer",
-        "monkey",
-      ],
       currentCards: [],
-      pairsAmount: 8,
+      pairsAmount: 0,
       gameStarted: false,
       gameOver: false,
       difficulty: this.$store.state.difficulty,
@@ -81,14 +70,14 @@ export default {
   methods: {
     shuffleCards() {
       this.currentCards = [];
-      let remainingCards = [...this.availableCards];
+      let remainingCards = [...this.$store.getters.getCards];
       let shuffledCards = [];
 
+      let availableCardsLength = this.$store.getters.getCards.length;
+
       for (let i = 0; i < this.pairsAmount; i++) {
-        let cardIndex = Math.floor(Math.random() * (13 - i));
-        console.log(cardIndex);
+        let cardIndex = Math.floor(Math.random() * (availableCardsLength - i));
         let card = remainingCards.splice(cardIndex, 1).join();
-        console.log(remainingCards);
         shuffledCards.push(card);
       }
 
@@ -111,7 +100,7 @@ export default {
     },
     startGame() {
       this.$store.dispatch("restartTimer");
-      this.pairsAmount = 8;
+      this.setPairsAmount();
       this.shuffleCards();
       this.$store.commit("setFirstCard", "");
       this.$store.commit("setSecondCard", "");
@@ -121,6 +110,19 @@ export default {
     },
     setDifficulty(value) {
       this.$store.dispatch("setDifficulty", value.target.value);
+    },
+    setPairsAmount() {
+      switch (this.$store.state.difficulty) {
+        case "1":
+          this.pairsAmount = 6;
+          break;
+        case "2":
+          this.pairsAmount = 8;
+          break;
+        case "3":
+          this.pairsAmount = 10;
+          break;
+      }
     },
   },
 };

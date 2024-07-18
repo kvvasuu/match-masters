@@ -5,7 +5,7 @@
         <div
           class="card"
           :class="{
-            flip: !isReversed,
+            flip: isReversed,
             active: !$store.state.loading,
           }"
           @click="checkCard"
@@ -123,5 +123,24 @@ img {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+@media only screen and (max-width: 1000px) {
+  .card-container {
+    height: 8rem;
+    width: 8rem;
+  }
+}
+@media only screen and (max-width: 680px) {
+  .card-container {
+    height: 6rem;
+    width: 6rem;
+  }
+}
+@media only screen and (max-width: 370px) {
+  .card-container {
+    height: 5rem;
+    width: 5em;
+  }
 }
 </style>

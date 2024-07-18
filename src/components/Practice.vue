@@ -1,7 +1,11 @@
 <template>
   <div class="board">
     <Scoreboard></Scoreboard>
-    <div class="game-cont" v-if="!roundOver">
+    <div
+      class="game-cont"
+      v-if="!roundOver"
+      :style="{ width: `${setGameWidth}rem` }"
+    >
       <Card
         v-for="(card, index) in currentCards"
         :key="`${card}${index}`"
@@ -67,6 +71,18 @@ export default {
       this.$store.dispatch("resetState");
     },
   },
+  computed: {
+    setGameWidth() {
+      switch (this.$store.state.difficulty) {
+        case "1":
+          return 46;
+        case "2":
+          return 46;
+        case "3":
+          return 58;
+      }
+    },
+  },
 };
 </script>
 
@@ -130,12 +146,10 @@ button {
   justify-content: center;
   flex-wrap: wrap;
   gap: 2rem;
-  width: 46rem;
   padding: 2rem;
   margin: 4rem 0 0 0;
   border-radius: 2rem;
   background-color: #ffffff60;
-  backdrop-filter: blur(5px);
 }
 .fade-enter-active,
 .fade-leave-active {
@@ -144,5 +158,25 @@ button {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+@media only screen and (max-width: 1000px) {
+  .game-cont {
+    width: 38rem !important;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  .game-cont {
+    width: 27rem !important;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+}
+@media only screen and (max-width: 370px) {
+  .game-cont {
+    width: 23rem !important;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
 }
 </style>
