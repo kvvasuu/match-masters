@@ -53,7 +53,22 @@ export default {
   },
   data() {
     return {
-      availableCards: ["cat", "dog", "cow", "turtle", "bird", "deer", "monkey"],
+      availableCards: [
+        "bee",
+        "dolphin",
+        "elephant",
+        "frog",
+        "hog",
+        "snail",
+        "tiger",
+        "cat",
+        "dog",
+        "cow",
+        "turtle",
+        "bird",
+        "deer",
+        "monkey",
+      ],
       currentCards: [],
       pairsAmount: 6,
       gameStarted: false,
@@ -69,7 +84,8 @@ export default {
       let shuffledCards = [];
 
       for (let i = this.pairsAmount; i > 0; i--) {
-        let cardIndex = Math.floor(Math.random() * (0 - i + 1) + i);
+        let cardIndex = Math.floor(Math.random() * (0 - 13 + 1) + 13);
+        console.log(cardIndex);
         let card = remainingCards.splice(cardIndex, 1).join();
         shuffledCards.push(card);
       }

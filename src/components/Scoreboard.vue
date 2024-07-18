@@ -1,7 +1,11 @@
 <template>
   <div class="scoreboard">
     <div class="container score">{{ $store.state.score }}</div>
-    <div class="container timer" @click="$store.dispatch('restartTimer')">
+    <div
+      class="container timer"
+      @click="$store.dispatch('restartTimer')"
+      v-if="$store.state.gameMode != 'practice'"
+    >
       {{ $store.getters.getTime }}
     </div>
     <div class="container moves">{{ $store.state.moves }}</div>
