@@ -30,6 +30,9 @@ export default {
       this.$store.dispatch("setGameMode", mode);
     },
   },
+  mounted() {
+    this.$store.dispatch("setGameMode", "");
+  },
 };
 </script>
 
