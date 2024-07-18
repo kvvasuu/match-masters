@@ -4,7 +4,12 @@
       <h1>{{ $store.state.gameMode }}</h1>
     </div>
     <slot></slot>
-    <button @click="startGame">Start game</button>
+    <div class="buttons">
+      <button class="icon" @click="startGame" title="BACK">
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+      <button @click="startGame">Start game</button>
+    </div>
   </div>
 </template>
 
@@ -27,6 +32,13 @@ export default {
   flex-direction: column;
 }
 
+.buttons {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin: 2rem 0 2rem 0;
+}
+
 h1 {
   font-size: 5rem;
   user-select: none;
@@ -45,13 +57,22 @@ button {
   padding: 0.9rem 1.6rem;
   display: flex;
   align-items: center;
-  margin: 0 2rem;
+  margin: 0 4rem 0 2rem;
   cursor: pointer;
   border-radius: 3rem;
   font-weight: bold;
   transition: all 0.3s ease;
   user-select: none;
-
+  &.icon {
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    margin: 0;
+    padding: 0;
+  }
   &:hover {
     transform: scale(1.05);
     box-shadow: 0 0 0.2rem #808836;
