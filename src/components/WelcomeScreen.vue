@@ -1,7 +1,7 @@
 <template>
   <div class="welcome-screen">
     <div class="logo">
-      <img src="../../logo.png" alt="Match Masters" />
+      <img src="../../logo.png" alt="Match Masters" draggable="false" />
     </div>
     <div class="buttons">
       <button
@@ -15,6 +15,7 @@
         id="compete"
         value="compete"
         @click="setGameMode($event.target.value)"
+        disabled
       >
         Compete
       </button>
@@ -64,11 +65,19 @@ button {
   border-radius: 3rem;
   font-weight: bold;
   transition: all 0.3s ease;
+  user-select: none;
+
   &:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
+    box-shadow: 0 0 0.2rem #808836;
   }
   &:active {
     transform: scale(0.95);
+  }
+  &:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+    transform: scale(1);
   }
 }
 
