@@ -37,8 +37,14 @@ const store = createStore({
     movesIncrement(state) {
       state.moves++;
     },
+    resetMoves(state) {
+      state.moves = 0;
+    },
     scoreIncrement(state) {
       state.score++;
+    },
+    resetScore(state) {
+      state.score = 0;
     },
     stepReset(state) {
       state.step = 0;
@@ -110,6 +116,15 @@ const store = createStore({
     },
     setDifficulty(context, payload) {
       context.commit("setDifficulty", payload);
+    },
+    resetState(context) {
+      context.commit("stepReset");
+      context.commit("restartTimer");
+      context.commit("setNickname", "");
+      context.commit("setFirstCard", "");
+      context.commit("setSecondCard", "");
+      context.commit("resetScore");
+      context.commit("resetMoves");
     },
   },
 });

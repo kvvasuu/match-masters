@@ -29,7 +29,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: antiquewhite;
+  background-color: #ffbf00;
+  border-bottom: 0.34rem solid #808836;
 }
 
 .container {

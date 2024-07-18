@@ -1,9 +1,9 @@
 <template>
   <Transition name="fade" mode="out-in">
-    <Board
+    <Practice
       :current-cards="currentCards"
       v-if="gameStarted && !gameOver"
-    ></Board>
+    ></Practice>
     <GameSettings v-else @start-game="startGame">
       <div
         class="practice-settings"
@@ -38,13 +38,13 @@
 
 <script>
 import Scoreboard from "./Scoreboard.vue";
-import Board from "./Board.vue";
+import Practice from "./Practice.vue";
 import GameSettings from "./GameSettings.vue";
 
 export default {
   components: {
     Scoreboard,
-    Board,
+    Practice,
     GameSettings,
   },
   data() {

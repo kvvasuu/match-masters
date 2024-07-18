@@ -62,6 +62,7 @@ export default {
     },
     goBack() {
       this.$store.dispatch("setGameMode", "");
+      this.$store.dispatch("resetState");
     },
   },
 };
