@@ -1,3 +1,6 @@
+:root {
+}
+
 body {
   min-height: 100vh;
   font-size: 16px;
@@ -8,6 +11,23 @@ body {
   position: relative;
   padding: 0;
   margin: 0;
+}
+
+#app-background {
+  background: url("./assets/clouds.jpeg");
+  min-width: 100vw;
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  overflow-x: hidden;
+  transition: all 1s ease;
+  user-select: none;
 }
 
 #app {
