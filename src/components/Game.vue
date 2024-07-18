@@ -2,6 +2,10 @@
   <Transition name="fade" mode="out-in">
     <Practice
       :current-cards="currentCards"
+      @go-back="
+        game0ver = true;
+        gameStarted = false;
+      "
       v-if="gameStarted && !gameOver"
     ></Practice>
     <GameSettings v-else @start-game="startGame">

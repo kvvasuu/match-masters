@@ -26,6 +26,7 @@ export default {
     Scoreboard,
   },
   props: ["currentCards"],
+  emits: ["goBack"],
   data() {
     return {
       pairsAmount: 6,
@@ -61,7 +62,7 @@ export default {
       }
     },
     goBack() {
-      this.$store.dispatch("setGameMode", "");
+      this.$emit("goBack");
       this.$store.dispatch("resetState");
     },
   },
