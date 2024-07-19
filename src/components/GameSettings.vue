@@ -146,7 +146,7 @@ h1 {
   font-size: 5rem;
   user-select: none;
   text-transform: uppercase;
-  font-family: Plarjoek;
+  font-family: ChaseDreams;
   color: #ffbf00;
   letter-spacing: 2px;
   text-shadow: 3px 3px 1px #4d5221;
