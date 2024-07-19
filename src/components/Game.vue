@@ -30,7 +30,12 @@
         <Transition name="fade" mode="out-in">
           <div class="category cont" v-if="difficulty === '1'">
             <label for="category">Category:</label>
-            <select name="category" id="category">
+            <select
+              name="category"
+              id="category"
+              @change="setCategory"
+              v-model="category"
+            >
               <option
                 v-for="category in $store.getters.getCategoriesList"
                 :value="category"
@@ -64,7 +69,7 @@ export default {
       gameStarted: false,
       gameOver: false,
       difficulty: this.$store.state.difficulty,
-      category: "animals",
+      category: this.$store.state.category,
     };
   },
   methods: {
@@ -73,7 +78,8 @@ export default {
       let remainingCards = [...this.$store.getters.getCards];
       let shuffledCards = [];
 
-      let availableCardsLength = this.$store.getters.getCards.length;
+      console.log(remainingCards);
+      let availableCardsLength = remainingCards.length;
 
       for (let i = 0; i < this.pairsAmount; i++) {
         let cardIndex = Math.floor(Math.random() * (availableCardsLength - i));
@@ -110,6 +116,10 @@ export default {
     },
     setDifficulty(value) {
       this.$store.dispatch("setDifficulty", value.target.value);
+    },
+    setCategory(value) {
+      this.$store.dispatch("setCategory", value.target.value);
+      console.log(this.$store.state.category);
     },
     setPairsAmount() {
       switch (this.$store.state.difficulty) {

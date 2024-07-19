@@ -37,6 +37,24 @@ const store = createStore({
           "deer",
           "monkey",
         ],
+        food: [
+          "apple",
+          "carrot",
+          "pear",
+          "banana",
+          "coconut",
+          "pineapple",
+          "watermelon",
+          "cherry",
+          "pumpkin",
+          "pepper",
+          "cucumber",
+          "cabbage",
+          "tomato",
+          "corn",
+          "onion",
+        ],
+        space: [],
       },
     };
   },
@@ -116,6 +134,9 @@ const store = createStore({
     setDifficulty(state, payload) {
       state.difficulty = payload;
     },
+    setCategory(state, payload) {
+      state.category = payload;
+    },
   },
   actions: {
     setSecondCard(context, card) {
@@ -149,6 +170,9 @@ const store = createStore({
     },
     setDifficulty(context, payload) {
       context.commit("setDifficulty", payload);
+    },
+    setCategory(context, payload) {
+      context.commit("setCategory", payload);
     },
     resetState(context) {
       context.commit("stepReset");
