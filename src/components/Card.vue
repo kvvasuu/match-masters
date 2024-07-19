@@ -69,7 +69,7 @@ export default {
   computed: {
     passCardSrc() {
       return new URL(
-        `../assets/animals/${this.cardName.split("-")[0]}.webp`,
+        `../assets/cards/${this.cardName.split("-")[0]}.webp`,
         import.meta.url
       ).href;
     },

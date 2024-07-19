@@ -44,7 +44,6 @@ const store = createStore({
           "cherry",
           "pumpkin",
           "pepper",
-          "cucumber",
           "cabbage",
           "tomato",
           "corn",
