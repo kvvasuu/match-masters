@@ -1,11 +1,7 @@
 <template>
   <div class="board">
     <Scoreboard></Scoreboard>
-    <div
-      class="game-cont"
-      v-if="!roundOver"
-      :style="{ width: `${setGameWidth}rem` }"
-    >
+    <div class="game-cont" :style="{ width: `${setGameWidth}rem` }">
       <Card
         v-for="(card, index) in currentCards"
         :key="`${card}${index}`"
@@ -29,12 +25,11 @@ export default {
     Card,
     Scoreboard,
   },
-  props: ["currentCards"],
+  props: ["currentCards", "pairs"],
   emits: ["goBack", "nextRound"],
   data() {
     return {
-      pairsAmount: 6,
-      roundOver: false,
+      pairsAmount: this.pairs,
     };
   },
   methods: {
@@ -62,7 +57,6 @@ export default {
       });
       if (this.pairsAmount <= 0) {
         this.$store.commit("roundIncrement");
-        this.roundOver = true;
         this.$emit("nextRound");
       }
     },

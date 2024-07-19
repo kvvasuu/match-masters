@@ -6,6 +6,7 @@
         game0ver = true;
         gameStarted = false;
       "
+      :pairs="pairsAmount"
       @next-round="startGame"
       v-if="gameStarted && !gameOver"
     ></Practice>
@@ -71,8 +72,8 @@ export default {
       this.$store.commit("setFirstCard", "");
       this.$store.commit("setSecondCard", "");
       this.$store.commit("stepReset");
-      this.gameStarted = true;
       this.gameOver = false;
+      this.gameStarted = true;
     },
 
     setPairsAmount() {

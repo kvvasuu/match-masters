@@ -82,6 +82,13 @@ export default {
   justify-content: center;
   flex-direction: column;
 }
+.practice-settings {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .cont {
   display: flex;
   align-items: center;
@@ -113,6 +120,7 @@ select {
   display: flex;
   align-items: center;
   margin: 0 2rem;
+  width: 8rem;
   cursor: pointer;
   border-radius: 1rem;
   font-weight: bold;

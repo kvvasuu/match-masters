@@ -49,7 +49,7 @@ const store = createStore({
           "corn",
           "onion",
         ],
-        space: [],
+        /* space: [], */
       },
     };
   },
