@@ -9,45 +9,7 @@
       @next-round="startGame"
       v-if="gameStarted && !gameOver"
     ></Practice>
-    <GameSettings v-else @start-game="startGame">
-      <div
-        class="practice-settings"
-        v-if="$store.state.gameMode === 'practice'"
-      >
-        <div class="difficulty cont">
-          <label for="difficulty">Difficulty:</label>
-          <select
-            name="difficulty"
-            id="difficulty"
-            @change="setDifficulty"
-            v-model="difficulty"
-          >
-            <option value="1">Easy</option>
-            <option value="2">Medium</option>
-            <option value="3">Hard</option>
-          </select>
-        </div>
-        <Transition name="fade" mode="out-in">
-          <div class="category cont" v-if="difficulty === '1'">
-            <label for="category">Category:</label>
-            <select
-              name="category"
-              id="category"
-              @change="setCategory"
-              v-model="category"
-            >
-              <option
-                v-for="category in $store.getters.getCategoriesList"
-                :value="category"
-              >
-                {{ category }}
-              </option>
-            </select>
-          </div>
-        </Transition>
-      </div>
-      <div class="compete-settings" v-else></div>
-    </GameSettings>
+    <GameSettings v-else @start-game="startGame"> </GameSettings>
   </Transition>
 </template>
 
@@ -68,8 +30,6 @@ export default {
       pairsAmount: 0,
       gameStarted: false,
       gameOver: false,
-      difficulty: this.$store.state.difficulty,
-      category: this.$store.state.category,
     };
   },
   methods: {
@@ -114,13 +74,7 @@ export default {
       this.gameStarted = true;
       this.gameOver = false;
     },
-    setDifficulty(value) {
-      this.$store.dispatch("setDifficulty", value.target.value);
-    },
-    setCategory(value) {
-      this.$store.dispatch("setCategory", value.target.value);
-      console.log(this.$store.state.category);
-    },
+
     setPairsAmount() {
       switch (this.$store.state.difficulty) {
         case "1":
@@ -139,51 +93,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.cont {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 1rem 0 0 0;
-}
-
-label {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: rgb(22, 22, 22);
-}
-
-select {
-  font-size: 1rem;
-  background: #ffbf00;
-  color: #808836;
-  border: 0.3rem solid #808836;
-  padding: 0.9rem 1.6rem;
-  display: flex;
-  align-items: center;
-  margin: 0 2rem;
-  cursor: pointer;
-  border-radius: 1rem;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  user-select: none;
-  appearance: none;
-  border: 0;
-  outline: 0;
-  &::-ms-expand {
-    display: none;
-  }
-  &:focus {
-    outline: none;
-  }
-  option {
-    color: inherit;
-    font-weight: bold;
-    &:hover {
-      background-color: #ffd863;
-    }
-  }
-}
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 1s ease;
