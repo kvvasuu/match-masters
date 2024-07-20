@@ -69,7 +69,6 @@ export default {
     },
     setCategory(value) {
       this.$store.dispatch("setCategory", value.target.value);
-      console.log(this.$store.state.category);
     },
   },
 };

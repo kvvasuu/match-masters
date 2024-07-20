@@ -42,7 +42,6 @@ export default {
       let remainingCards = [...this.$store.getters.getCards];
       let shuffledCards = [];
 
-      console.log(remainingCards);
       let availableCardsLength = remainingCards.length;
 
       for (let i = 0; i < this.pairsAmount; i++) {
@@ -76,7 +75,7 @@ export default {
       this.$store.commit("setSecondCard", "");
       this.$store.commit("stepReset");
       this.gameOver = false;
-      this.$store.commit("startGame");
+      this.$store.commit("setGameState", true);
     },
 
     setPairsAmount() {
