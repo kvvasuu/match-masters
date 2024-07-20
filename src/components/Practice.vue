@@ -1,14 +1,12 @@
 <template>
-  <div class="board">
-    <div class="game-cont" :style="{ width: `${setGameWidth}rem` }">
-      <Card
-        v-for="(card, index) in currentCards"
-        :key="`${card}${index}`"
-        ref="cards"
-        :card-name="card"
-        @check-cards="matchCards"
-      ></Card>
-    </div>
+  <div class="game-cont" :style="{ width: `${setGameWidth}rem` }">
+    <Card
+      v-for="(card, index) in currentCards"
+      :key="`${card}${index}`"
+      ref="cards"
+      :card-name="card"
+      @check-cards="matchCards"
+    ></Card>
   </div>
 </template>
 
@@ -54,10 +52,6 @@ export default {
         this.$emit("nextRound");
       }
     },
-    goBack() {
-      this.$emit("goBack");
-      this.$store.dispatch("resetState");
-    },
   },
   computed: {
     setGameWidth() {
@@ -75,15 +69,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.board {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
 button {
   font-size: 1.4rem;
   background: #ffbf00;
@@ -120,12 +105,6 @@ button {
     cursor: not-allowed;
     transform: scale(1);
   }
-}
-
-.back-btn {
-  position: absolute;
-  bottom: 2rem;
-  left: 2rem;
 }
 
 .game-cont {

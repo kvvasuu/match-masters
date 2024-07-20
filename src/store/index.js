@@ -138,14 +138,14 @@ const store = createStore({
     },
   },
   actions: {
-    startGame(context, payload) {
-      context.commit("startGame", payload);
+    setGameState(context, payload) {
+      context.commit("setGameState", payload);
     },
-    setSecondCard(context, card) {
+    setSecondCard(context, payload) {
       return new Promise((resolve, reject) => {
         context.commit("setLoading");
         setTimeout(() => {
-          context.commit("setSecondCard", card);
+          context.commit("setSecondCard", payload);
           context.commit("setLoading");
           resolve();
         }, 1000);

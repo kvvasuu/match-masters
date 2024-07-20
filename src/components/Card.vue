@@ -93,11 +93,11 @@ export default {
   transition: transform 1s, translate 0.3s ease;
   &.flip {
     transform: translateX(-100%) rotateY(-180deg);
-    &.active {
-      cursor: pointer;
-      &:hover {
-        translate: 0 -0.2rem;
-      }
+  }
+  &.active {
+    cursor: pointer;
+    &:hover {
+      translate: 0 -0.2rem;
     }
   }
 }

@@ -1,21 +1,19 @@
 <template>
-  <Scoreboard></Scoreboard>
-  <Transition name="fade" mode="out-in">
-    <Practice
-      :current-cards="currentCards"
-      @go-back="
-        game0ver = true;
-        gameStarted = false;
-      "
-      :pairs="pairsAmount"
-      @next-round="startGame"
-      v-if="gameStarted && !gameOver"
-      :key="currentCards"
-    ></Practice>
-  </Transition>
-  <button class="icon back-btn" @click="goBack" title="BACK">
-    <i class="fa-solid fa-arrow-left"></i>
-  </button>
+  <div class="board">
+    <Scoreboard></Scoreboard>
+    <Transition name="fade" mode="out-in">
+      <Practice
+        :current-cards="currentCards"
+        :pairs="pairsAmount"
+        @next-round="startGame"
+        v-if="$store.state.gameStarted && currentCards.length != 0"
+        :key="currentCards"
+      ></Practice>
+    </Transition>
+    <button class="icon back-btn" @click="goBack" title="BACK">
+      <i class="fa-solid fa-arrow-left"></i>
+    </button>
+  </div>
 </template>
 
 <script>
@@ -77,7 +75,11 @@ export default {
       this.gameOver = false;
       this.$store.commit("setGameState", true);
     },
-
+    goBack() {
+      this.game0ver = true;
+      this.$store.commit("setGameState", false);
+      this.$store.dispatch("resetState");
+    },
     setPairsAmount() {
       switch (this.$store.state.difficulty) {
         case "1":
@@ -92,10 +94,21 @@ export default {
       }
     },
   },
+  mounted() {
+    this.startGame();
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+.board {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 1s ease;
@@ -103,5 +116,10 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+.back-btn {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
 }
 </style>

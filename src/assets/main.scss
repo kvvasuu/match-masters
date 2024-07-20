@@ -52,6 +52,44 @@ body {
   width: 100%;
 }
 
+button {
+  font-size: 1.4rem;
+  background: #ffbf00;
+  color: #808836;
+  border: 0.3rem solid #808836;
+  padding: 0.9rem 1.6rem;
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 2rem;
+  cursor: pointer;
+  border-radius: 3rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  user-select: none;
+  &.icon {
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    margin: 0;
+    padding: 0;
+  }
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 0.2rem #808836;
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+  &:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+    transform: scale(1);
+  }
+}
+
 @media only screen and (max-width: 480px) {
   :root {
     font-size: 12px;

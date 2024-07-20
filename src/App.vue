@@ -2,7 +2,7 @@
   <Transition name="fade" mode="out-in">
     <WelcomeScreen v-if="!$store.state.gameMode"></WelcomeScreen>
     <GameSettings v-else-if="!$store.state.gameStarted"> </GameSettings>
-    <Game v-else-if="$store.state.gameStarted">></Game>
+    <Game v-else-if="$store.state.gameStarted"></Game>
   </Transition>
 </template>
 
