@@ -1,4 +1,5 @@
 <template>
+  <Scoreboard></Scoreboard>
   <Transition name="fade" mode="out-in">
     <Practice
       :current-cards="currentCards"
@@ -9,9 +10,12 @@
       :pairs="pairsAmount"
       @next-round="startGame"
       v-if="gameStarted && !gameOver"
+      :key="currentCards"
     ></Practice>
-    <GameSettings v-else @start-game="startGame"> </GameSettings>
   </Transition>
+  <button class="icon back-btn" @click="goBack" title="BACK">
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
 </template>
 
 <script>
@@ -29,7 +33,6 @@ export default {
     return {
       currentCards: [],
       pairsAmount: 0,
-      gameStarted: false,
       gameOver: false,
     };
   },
@@ -73,7 +76,7 @@ export default {
       this.$store.commit("setSecondCard", "");
       this.$store.commit("stepReset");
       this.gameOver = false;
-      this.gameStarted = true;
+      this.$store.commit("startGame");
     },
 
     setPairsAmount() {

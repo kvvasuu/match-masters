@@ -1,6 +1,5 @@
 <template>
   <div class="board">
-    <Scoreboard></Scoreboard>
     <div class="game-cont" :style="{ width: `${setGameWidth}rem` }">
       <Card
         v-for="(card, index) in currentCards"
@@ -10,20 +9,15 @@
         @check-cards="matchCards"
       ></Card>
     </div>
-    <button class="icon back-btn" @click="goBack" title="BACK">
-      <i class="fa-solid fa-arrow-left"></i>
-    </button>
   </div>
 </template>
 
 <script>
 import Card from "./Card.vue";
-import Scoreboard from "./Scoreboard.vue";
 
 export default {
   components: {
     Card,
-    Scoreboard,
   },
   props: ["currentCards", "pairs"],
   emits: ["goBack", "nextRound"],

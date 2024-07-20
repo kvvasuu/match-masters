@@ -50,7 +50,6 @@
 
 <script>
 export default {
-  emits: ["startGame"],
   data() {
     return {
       difficulty: this.$store.state.difficulty,
@@ -59,10 +58,11 @@ export default {
   },
   methods: {
     startGame() {
-      this.$emit("startGame");
+      this.$store.dispatch("setGameState", true);
     },
     goBack() {
       this.$store.dispatch("setGameMode", "");
+      this.$store.dispatch("setGameState", false);
     },
     setDifficulty(value) {
       this.$store.dispatch("setDifficulty", value.target.value);

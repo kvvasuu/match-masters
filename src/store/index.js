@@ -4,6 +4,7 @@ import { useTimer } from "vue-timer-hook";
 const store = createStore({
   state() {
     return {
+      gameStarted: false,
       firstCard: "",
       secondCard: "",
       step: 0,
@@ -85,11 +86,14 @@ const store = createStore({
     },
   },
   mutations: {
-    setFirstCard(state, card) {
-      state.firstCard = card;
+    setGameState(state, payload) {
+      state.gameStarted = payload;
     },
-    setSecondCard(state, card) {
-      state.secondCard = card;
+    setFirstCard(state, payload) {
+      state.firstCard = payload;
+    },
+    setSecondCard(state, payload) {
+      state.secondCard = payload;
     },
     stepIncrement(state) {
       state.step++;
@@ -134,6 +138,9 @@ const store = createStore({
     },
   },
   actions: {
+    startGame(context, payload) {
+      context.commit("startGame", payload);
+    },
     setSecondCard(context, card) {
       return new Promise((resolve, reject) => {
         context.commit("setLoading");
@@ -144,12 +151,12 @@ const store = createStore({
         }, 1000);
       });
     },
-    addScore(context, amount) {
-      let temp = context.state.score + amount;
+    addScore(context, payload) {
+      let temp = context.state.score + payload;
       let interval = setInterval(() => {
         if (context.state.score < temp) {
           context.commit("scoreIncrement");
-        } else if (context.state.score >= amount) {
+        } else if (context.state.score >= payload) {
           clearInterval(interval);
         }
       }, 50);
