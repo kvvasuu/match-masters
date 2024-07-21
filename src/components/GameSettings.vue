@@ -43,9 +43,9 @@
         <label for="nickname">Nickname:</label>
         <input
           type="text"
+          @keyup="formatNickname"
           name="nickname"
           id="nickname"
-          @change="setNickname"
           v-model="nickname"
         />
       </div>
@@ -54,7 +54,7 @@
       <button class="icon" @click="goBack" title="BACK">
         <i class="fa-solid fa-arrow-left"></i>
       </button>
-      <button @click="startGame">Start game</button>
+      <button @click="startGame" :disabled="!startPossible">Start game</button>
     </div>
   </div>
 </template>
@@ -65,25 +65,46 @@ export default {
     return {
       difficulty: this.$store.state.difficulty,
       category: this.$store.state.category,
+      nickname: "",
+      startPossible: true,
     };
   },
   methods: {
+    formatNickname() {
+      if (this.$store.state.gameMode === "compete") {
+        this.nickname.trim() === ""
+          ? (this.startPossible = false)
+          : (this.startPossible = true);
+      }
+    },
     startGame() {
-      this.$store.dispatch("setGameState", true);
+      if (this.$store.state.gameMode === "compete") {
+        this.difficulty = "3";
+        this.setDifficulty();
+        this.setNickaname();
+        this.$store.dispatch("setGameState", true);
+      } else {
+        this.$store.dispatch("setGameState", true);
+      }
     },
     goBack() {
       this.$store.dispatch("setGameMode", "");
       this.$store.dispatch("setGameState", false);
     },
-    setDifficulty(value) {
-      this.$store.dispatch("setDifficulty", value.target.value);
+    setDifficulty() {
+      this.$store.dispatch("setDifficulty", this.difficulty);
     },
     setCategory(value) {
       this.$store.dispatch("setCategory", value.target.value);
     },
-    setNickaname(value) {
-      this.$store.dispatch("setNickname", value.target.value);
+    setNickaname() {
+      this.$store.dispatch("setNickname", this.nickname);
     },
+  },
+  mounted() {
+    if (this.$store.state.gameMode === "compete") {
+      this.startPossible = false;
+    }
   },
 };
 </script>
@@ -140,7 +161,6 @@ select {
   transition: all 0.3s ease;
   user-select: none;
   appearance: none;
-  border: 0;
   outline: 0;
   text-transform: capitalize;
   box-shadow: 2px 2px 1px #4d5221;
@@ -160,7 +180,7 @@ input {
   font-size: 1rem;
   background: #ffbf00;
   color: #808836;
-  border: 0.3rem solid #808836;
+  border: 0.2rem solid #808836;
   padding: 0.9rem 1.6rem;
   display: flex;
   align-items: center;
@@ -169,21 +189,19 @@ input {
   border-radius: 1rem;
   font-weight: bold;
   transition: all 0.3s ease;
-  user-select: none;
   appearance: none;
-  border: 0;
   outline: 0;
   text-transform: capitalize;
   box-shadow: 2px 2px 1px #4d5221;
-  &::-ms-expand {
-    display: none;
-  }
   &:focus {
     outline: none;
   }
-  option {
-    color: inherit;
-    font-weight: bold;
+  &:-webkit-autofill,
+  :-webkit-autofill:hover,
+  :-webkit-autofill:focus,
+  :-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #ffbf00 inset !important;
+    -webkit-text-fill-color: #808836 !important;
   }
 }
 

@@ -124,7 +124,17 @@ const store = createStore({
     },
     restartTimer(state) {
       const time = new Date();
-      time.setSeconds(time.getSeconds() + 30);
+      time.setSeconds(time.getSeconds() + 120);
+      state.stopwatch.restart(time);
+    },
+    addTime(state) {
+      const time = new Date();
+      time.setSeconds(
+        time.getSeconds() +
+          state.stopwatch.minutes * 60 +
+          state.stopwatch.seconds +
+          20
+      );
       state.stopwatch.restart(time);
     },
     setGameMode(state, payload) {
@@ -166,6 +176,9 @@ const store = createStore({
     },
     restartTimer(context) {
       context.commit("restartTimer");
+    },
+    addTime(context) {
+      context.commit("addTime");
     },
     setGameMode(context, payload) {
       context.commit("setGameMode", payload);

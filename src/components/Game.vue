@@ -78,6 +78,7 @@ export default {
       this.$store.commit("setFirstCard", "");
       this.$store.commit("setSecondCard", "");
       this.round++;
+      this.$store.dispatch("addTime");
     },
     goBack() {
       this.game0ver = true;
