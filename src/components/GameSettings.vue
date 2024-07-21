@@ -38,7 +38,18 @@
         </Transition>
       </div>
     </div>
-    <div class="compete-settings" v-else></div>
+    <div class="compete-settings" v-else>
+      <div class="nickname cont">
+        <label for="nickname">Nickname:</label>
+        <input
+          type="text"
+          name="nickname"
+          id="nickname"
+          @change="setNickname"
+          v-model="nickname"
+        />
+      </div>
+    </div>
     <div class="buttons">
       <button class="icon" @click="goBack" title="BACK">
         <i class="fa-solid fa-arrow-left"></i>
@@ -69,6 +80,9 @@ export default {
     },
     setCategory(value) {
       this.$store.dispatch("setCategory", value.target.value);
+    },
+    setNickaname(value) {
+      this.$store.dispatch("setNickname", value.target.value);
     },
   },
 };
@@ -121,6 +135,37 @@ select {
   margin: 0 2rem;
   width: 8rem;
   cursor: pointer;
+  border-radius: 1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  user-select: none;
+  appearance: none;
+  border: 0;
+  outline: 0;
+  text-transform: capitalize;
+  box-shadow: 2px 2px 1px #4d5221;
+  &::-ms-expand {
+    display: none;
+  }
+  &:focus {
+    outline: none;
+  }
+  option {
+    color: inherit;
+    font-weight: bold;
+  }
+}
+
+input {
+  font-size: 1rem;
+  background: #ffbf00;
+  color: #808836;
+  border: 0.3rem solid #808836;
+  padding: 0.9rem 1.6rem;
+  display: flex;
+  align-items: center;
+  margin: 0 2rem;
+  width: 8rem;
   border-radius: 1rem;
   font-weight: bold;
   transition: all 0.3s ease;

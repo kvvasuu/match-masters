@@ -2,13 +2,13 @@
   <div class="board">
     <Scoreboard></Scoreboard>
     <Transition name="fade" mode="out-in">
-      <Practice
+      <Board
         :current-cards="currentCards"
         :pairs="pairsAmount"
-        @next-round="startGame"
+        @next-round="nextRound"
         v-if="$store.state.gameStarted && currentCards.length != 0"
         :key="currentCards"
-      ></Practice>
+      ></Board>
     </Transition>
     <button class="icon back-btn" @click="goBack" title="BACK">
       <i class="fa-solid fa-arrow-left"></i>
@@ -18,20 +18,20 @@
 
 <script>
 import Scoreboard from "./Scoreboard.vue";
-import Practice from "./Practice.vue";
+import Board from "./Board.vue";
 import GameSettings from "./GameSettings.vue";
 
 export default {
   components: {
     Scoreboard,
-    Practice,
+    Board,
     GameSettings,
   },
   data() {
     return {
       currentCards: [],
       pairsAmount: 0,
-      gameOver: false,
+      round: 1,
     };
   },
   methods: {
@@ -66,14 +66,18 @@ export default {
       );
     },
     startGame() {
+      this.nextRound();
       this.$store.dispatch("restartTimer");
+      this.$store.commit("stepReset");
+      this.gameOver = false;
+      this.$store.commit("setGameState", true);
+    },
+    nextRound() {
       this.setPairsAmount();
       this.shuffleCards();
       this.$store.commit("setFirstCard", "");
       this.$store.commit("setSecondCard", "");
-      this.$store.commit("stepReset");
-      this.gameOver = false;
-      this.$store.commit("setGameState", true);
+      this.round++;
     },
     goBack() {
       this.game0ver = true;

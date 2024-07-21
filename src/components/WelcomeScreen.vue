@@ -15,7 +15,6 @@
         id="compete"
         value="compete"
         @click="setGameMode($event.target.value)"
-        disabled
       >
         Compete
       </button>
