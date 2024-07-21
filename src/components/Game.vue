@@ -1,14 +1,17 @@
 <template>
   <div class="board">
-    <Scoreboard></Scoreboard>
+    <Scoreboard v-if="!gameEnded"></Scoreboard>
     <Transition name="fade" mode="out-in">
       <Board
         :current-cards="currentCards"
         :pairs="pairsAmount"
         @next-round="nextRound"
-        v-if="$store.state.gameStarted && currentCards.length != 0"
+        v-if="
+          $store.state.gameStarted && currentCards.length != 0 && !gameEnded
+        "
         :key="currentCards"
       ></Board>
+      <GameResults v-else-if="gameEnded"></GameResults>
     </Transition>
     <button class="icon back-btn" @click="goBack" title="BACK">
       <i class="fa-solid fa-arrow-left"></i>
@@ -20,19 +23,34 @@
 import Scoreboard from "./Scoreboard.vue";
 import Board from "./Board.vue";
 import GameSettings from "./GameSettings.vue";
+import GameResults from "./GameResults.vue";
 
 export default {
   components: {
     Scoreboard,
     Board,
     GameSettings,
+    GameResults,
   },
   data() {
     return {
       currentCards: [],
       pairsAmount: 0,
-      round: 1,
+      round: 0,
+      gameEnded: false,
     };
+  },
+  watch: {
+    getTime(newVal) {
+      if (newVal.minutes <= 0 && newVal.seconds <= 0) {
+        this.endGame();
+      }
+    },
+  },
+  computed: {
+    getTime() {
+      return this.$store.getters.getTime;
+    },
   },
   methods: {
     shuffleCards() {
@@ -73,15 +91,21 @@ export default {
       this.$store.commit("setGameState", true);
     },
     nextRound() {
+      this.round++;
+      if (this.round !== 1) {
+        this.$store.dispatch("addScore", 30);
+      }
       this.setPairsAmount();
       this.shuffleCards();
       this.$store.commit("setFirstCard", "");
       this.$store.commit("setSecondCard", "");
-      this.round++;
       this.$store.dispatch("addTime");
     },
+    endGame() {
+      this.$store.dispatch("finalScore");
+      this.gameEnded = true;
+    },
     goBack() {
-      this.game0ver = true;
       this.$store.commit("setGameState", false);
       this.$store.dispatch("resetState");
     },
@@ -101,6 +125,7 @@ export default {
   },
   mounted() {
     this.startGame();
+    this.$store.dispatch("finalScore");
   },
 };
 </script>

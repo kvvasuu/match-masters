@@ -39,6 +39,7 @@
       </div>
     </div>
     <div class="compete-settings" v-else>
+      <Highscores :scores-amount="3"></Highscores>
       <div class="nickname cont">
         <label for="nickname">Nickname:</label>
         <input
@@ -60,7 +61,12 @@
 </template>
 
 <script>
+import Highscores from "./Highscores.vue";
+
 export default {
+  components: {
+    Highscores,
+  },
   data() {
     return {
       difficulty: this.$store.state.difficulty,
@@ -119,6 +125,13 @@ export default {
 .practice-settings {
   display: flex;
   align-items: flex-end;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.compete-settings {
+  display: flex;
+  align-items: center;
   justify-content: center;
   flex-direction: column;
 }
@@ -220,6 +233,7 @@ h1 {
   color: #ffbf00;
   letter-spacing: 2px;
   text-shadow: 3px 3px 1px #4d5221;
+  margin: 0;
 }
 
 button {

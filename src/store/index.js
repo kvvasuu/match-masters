@@ -56,19 +56,17 @@ const store = createStore({
   },
   getters: {
     getTime(state) {
-      if (state.stopwatch.isRunning) {
-        let minutes = "";
-        let seconds = "";
-        state.stopwatch.minutes < 10
-          ? (minutes = "0" + state.stopwatch.minutes)
-          : (minutes = state.stopwatch.minutes);
+      let minutes = "";
+      let seconds = "";
+      state.stopwatch.minutes < 10
+        ? (minutes = "0" + state.stopwatch.minutes)
+        : (minutes = state.stopwatch.minutes);
 
-        state.stopwatch.seconds < 10
-          ? (seconds = "0" + state.stopwatch.seconds)
-          : (seconds = state.stopwatch.seconds);
+      state.stopwatch.seconds < 10
+        ? (seconds = "0" + state.stopwatch.seconds)
+        : (seconds = state.stopwatch.seconds);
 
-        return `${minutes}:${seconds}`;
-      } else return `${state.stopwatch.minutes}:${state.stopwatch.seconds}`;
+      return { minutes: minutes, seconds: seconds };
     },
     getCategoriesList(state) {
       return Object.keys(state.availableCards);
@@ -110,6 +108,9 @@ const store = createStore({
     scoreIncrement(state) {
       state.score++;
     },
+    finalScore(state, payload) {
+      state.score = payload;
+    },
     resetScore(state) {
       state.score = 0;
     },
@@ -133,7 +134,7 @@ const store = createStore({
         time.getSeconds() +
           state.stopwatch.minutes * 60 +
           state.stopwatch.seconds +
-          20
+          15
       );
       state.stopwatch.restart(time);
     },
@@ -170,6 +171,10 @@ const store = createStore({
           clearInterval(interval);
         }
       }, 50);
+    },
+    finalScore(context) {
+      let score = context.state.score - context.state.moves;
+      context.commit("finalScore", score);
     },
     setNickname(context, payload) {
       context.commit("setNickname", payload);

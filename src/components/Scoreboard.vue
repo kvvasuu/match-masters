@@ -6,7 +6,7 @@
       @click="$store.dispatch('restartTimer')"
       v-if="$store.state.gameMode != 'practice'"
     >
-      {{ $store.getters.getTime }}
+      {{ getTime }}
     </div>
     <div class="container moves">{{ $store.state.moves }}</div>
   </div>
@@ -15,9 +15,12 @@
 <script>
 export default {
   data() {
-    return {
-      isReversed: true,
-    };
+    return {};
+  },
+  computed: {
+    getTime() {
+      return `${this.$store.getters.getTime.minutes}:${this.$store.getters.getTime.seconds}`;
+    },
   },
 };
 </script>
