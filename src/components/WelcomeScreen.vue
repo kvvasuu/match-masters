@@ -91,4 +91,23 @@ button {
 .fade-leave-to {
   opacity: 0;
 }
+
+@media only screen and (max-width: 1000px) {
+  .welcome-screen {
+    width: 40rem;
+  }
+}
+@media only screen and (max-width: 680px) {
+  .welcome-screen {
+    width: 30rem;
+  }
+  button {
+    margin: 0 1rem;
+  }
+}
+@media only screen and (max-width: 370px) {
+  .welcome-screen {
+    width: 24rem;
+  }
+}
 </style>
