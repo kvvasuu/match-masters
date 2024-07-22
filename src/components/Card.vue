@@ -125,22 +125,32 @@ img {
   opacity: 0;
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1000px), (max-height: 880px) {
   .card-container {
     height: 8rem;
     width: 8rem;
+    img {
+      border-radius: 0.8rem;
+    }
   }
 }
-@media only screen and (max-width: 680px) {
+
+@media only screen and (max-width: 600px), (max-height: 880px) {
   .card-container {
     height: 6rem;
     width: 6rem;
+    img {
+      border-radius: 0.6rem;
+    }
   }
 }
-@media only screen and (max-width: 370px) {
+@media only screen and (max-width: 370px), (max-height: 550px) {
   .card-container {
     height: 5rem;
-    width: 5em;
+    width: 5rem;
+  }
+  img {
+    border-radius: 0.5rem;
   }
 }
 </style>

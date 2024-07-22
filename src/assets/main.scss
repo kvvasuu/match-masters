@@ -91,8 +91,13 @@ button {
   }
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 480px), (max-height: 460px) {
   :root {
     font-size: 12px;
+  }
+}
+@media only screen and (min-width: 2000px) and (min-height: 1200px) {
+  :root {
+    font-size: 20px;
   }
 }

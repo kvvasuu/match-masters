@@ -11,7 +11,9 @@
         "
         :key="currentCards"
       ></Board>
-      <GameResults v-else-if="gameEnded"></GameResults>
+      <GameResults
+        v-else-if="gameEnded && $store.state.gameMode === 'compete'"
+      ></GameResults>
     </Transition>
     <button class="icon back-btn" @click="goBack" title="BACK">
       <i class="fa-solid fa-arrow-left"></i>
@@ -45,7 +47,11 @@ export default {
   },
   watch: {
     getTime(newVal) {
-      if (newVal.minutes <= 0 && newVal.seconds <= 0) {
+      if (
+        this.$store.state.gameMode === "compete" &&
+        newVal.minutes <= 0 &&
+        newVal.seconds <= 0
+      ) {
         this.endGame();
       }
     },
@@ -144,7 +150,6 @@ export default {
           }
         })
         .finally(() => {
-          console.log("supa");
           this.gameEnded = true;
           this.isLoading = false;
         });

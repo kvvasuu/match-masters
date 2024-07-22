@@ -126,24 +126,39 @@ button {
 .fade-leave-to {
   opacity: 0;
 }
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1000px), (max-height: 880px) {
   .game-cont {
-    width: 38rem !important;
+    width: 35rem !important;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 1.4rem;
   }
 }
 
-@media only screen and (max-width: 680px) {
+@media only screen and (max-width: 600px) {
   .game-cont {
     width: 27rem !important;
     gap: 1rem;
-    padding: 1.5rem;
+    padding: 0.8rem;
+    border-radius: 1rem;
   }
 }
+
+@media only screen and (max-height: 550px) {
+  .game-cont {
+    width: 29rem !important;
+    gap: 1rem;
+    padding: 0.8rem;
+    border-radius: 1rem;
+  }
+}
+
 @media only screen and (max-width: 370px) {
   .game-cont {
     width: 23rem !important;
     gap: 1rem;
-    padding: 1.5rem;
+    padding: 0.8rem;
+    border-radius: 1rem;
   }
 }
 </style>
