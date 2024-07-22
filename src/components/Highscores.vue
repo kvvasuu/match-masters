@@ -17,13 +17,14 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   props: ["scoresAmount"],
   data() {
     return {
       isLoading: false,
       scoresList: [],
-      getScores() {},
     };
   },
   computed: {
@@ -32,6 +33,23 @@ export default {
         .sort((a, b) => b.score - a.score)
         .slice(0, this.scoresAmount);
     },
+  },
+  methods: {
+    getScores() {
+      fetch("https://match-masters-174d4-default-rtdb.firebaseio.com/scores/");
+      /* axios
+        .get("https://match-masters-174d4-default-rtdb.firebaseio.com/scores/")
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        }); */
+    },
+  },
+
+  mounted() {
+    this.getScores();
   },
 };
 </script>

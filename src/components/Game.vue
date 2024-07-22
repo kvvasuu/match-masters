@@ -24,6 +24,7 @@ import Scoreboard from "./Scoreboard.vue";
 import Board from "./Board.vue";
 import GameSettings from "./GameSettings.vue";
 import GameResults from "./GameResults.vue";
+import axios from "axios";
 
 export default {
   components: {
@@ -101,9 +102,29 @@ export default {
       this.$store.commit("setSecondCard", "");
       this.$store.dispatch("addTime");
     },
-    endGame() {
-      this.$store.dispatch("finalScore");
-      this.gameEnded = true;
+    async endGame() {
+      await this.$store
+        .dispatch("finalScore")
+        .then(() => {
+          axios
+            .post(
+              "https://match-masters-174d4-default-rtdb.firebaseio.com/scores/",
+              {
+                nickname: this.$store.state.nickname,
+                score: this.$store.state.score,
+              }
+            )
+            .then(function (response) {
+              console.log(response);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        })
+        .finally(function () {
+          console.log("supa");
+          this.gameEnded = true;
+        });
     },
     goBack() {
       this.$store.commit("setGameState", false);

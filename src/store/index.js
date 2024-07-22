@@ -125,7 +125,7 @@ const store = createStore({
     },
     restartTimer(state) {
       const time = new Date();
-      time.setSeconds(time.getSeconds() + 120);
+      time.setSeconds(time.getSeconds() + 30);
       state.stopwatch.restart(time);
     },
     addTime(state) {
@@ -174,7 +174,10 @@ const store = createStore({
     },
     finalScore(context) {
       let score = context.state.score - context.state.moves;
-      context.commit("finalScore", score);
+      return new Promise((resolve, reject) => {
+        context.commit("finalScore", score);
+        resolve();
+      });
     },
     setNickname(context, payload) {
       context.commit("setNickname", payload);
