@@ -23,6 +23,7 @@ $details-color: #d10363;
 }
 
 body {
+  background-color: $primary-color;
   background: url("./background.jpeg");
   min-width: 100vw;
   min-height: 100vh;
