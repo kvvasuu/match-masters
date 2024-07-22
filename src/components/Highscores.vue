@@ -19,6 +19,7 @@ export default {
   props: ["scoresAmount"],
   data() {
     return {
+      isLoading: false,
       scoresList: [
         { nickname: "Kwasu", score: 300 },
         { nickname: "Zdzichu", score: 124 },
@@ -28,6 +29,7 @@ export default {
         { nickname: "Lupus", score: 324 },
         { nickname: "Kicha", score: 543 },
       ],
+      getScores() {},
     };
   },
   computed: {
