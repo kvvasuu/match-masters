@@ -33,8 +33,8 @@ export default {
   computed: {
     topScoresList() {
       return this.scoresList
-        .slice(0, this.scoresAmount)
-        .sort((a, b) => b.score - a.score);
+        .sort((a, b) => b.score - a.score)
+        .slice(0, this.scoresAmount);
     },
   },
 };
