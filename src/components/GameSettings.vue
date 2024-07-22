@@ -44,9 +44,10 @@
         <label for="nickname">Nickname:</label>
         <input
           type="text"
-          @keyup="formatNickname"
+          v-debounce:300ms="verifyNickname"
           name="nickname"
           id="nickname"
+          maxlength="16"
           v-model="nickname"
         />
       </div>
@@ -76,8 +77,12 @@ export default {
     };
   },
   methods: {
-    formatNickname() {
+    verifyNickname() {
       if (this.$store.state.gameMode === "compete") {
+        let nicknames = [...this.$store.state.scoresList].map(
+          (el) => el.nickname
+        );
+
         this.nickname.trim() === ""
           ? (this.startPossible = false)
           : (this.startPossible = true);
@@ -110,6 +115,7 @@ export default {
   mounted() {
     if (this.$store.state.gameMode === "compete") {
       this.startPossible = false;
+      this.$store.dispatch("getScores");
     }
   },
 };
