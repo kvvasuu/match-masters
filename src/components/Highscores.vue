@@ -4,12 +4,14 @@
     <ul>
       <li
         v-for="(score, index) in topScoresList"
+        v-if="scoresList.length !== 0"
         :class="{ you: $store.state.nickname === score.nickname }"
       >
         <div class="position">{{ index + 1 }}</div>
         <div class="nickname">{{ score.nickname }}</div>
         <div class="score">{{ score.score }}</div>
       </li>
+      <li v-else style="justify-content: center">No data</li>
     </ul>
   </div>
 </template>
@@ -20,15 +22,7 @@ export default {
   data() {
     return {
       isLoading: false,
-      scoresList: [
-        { nickname: "Kwasu", score: 300 },
-        { nickname: "Zdzichu", score: 124 },
-        { nickname: "Arek", score: 32 },
-        { nickname: "Krzchu", score: 412 },
-        { nickname: "Marian", score: 42 },
-        { nickname: "Lupus", score: 324 },
-        { nickname: "Kicha", score: 543 },
-      ],
+      scoresList: [],
       getScores() {},
     };
   },
