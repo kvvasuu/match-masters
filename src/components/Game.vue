@@ -117,11 +117,9 @@ export default {
 
           if (this.scoreKey !== undefined) {
             instance
-              .put("/scores.json", {
-                [this.scoreKey]: {
-                  nickname: this.$store.state.nickname,
-                  score: score,
-                },
+              .put(`/scores/${this.scoreKey}`, {
+                nickname: this.$store.state.nickname,
+                score: score,
               })
               .then((response) => {
                 console.log(response);
