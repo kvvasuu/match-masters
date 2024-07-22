@@ -145,6 +145,7 @@ export default {
         })
         .finally(() => {
           console.log("supa");
+          this.gameEnded = true;
           this.isLoading = false;
         });
     },
@@ -172,7 +173,7 @@ export default {
       this.scoreKey = Object.keys(response).find(
         (key) => response[key].nickname === this.$store.state.nickname
       );
-      this.playerHighscore = response[scoreKey].score;
+      this.playerHighscore = response[this.scoreKey].score;
     });
   },
 };
