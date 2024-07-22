@@ -39,6 +39,7 @@ export default {
       pairsAmount: 0,
       round: 0,
       gameEnded: false,
+      scoreKey: "",
     };
   },
   watch: {
@@ -105,7 +106,7 @@ export default {
     async endGame() {
       await this.$store
         .dispatch("finalScore")
-        .then(() => {
+        .then((score) => {
           const instance = axios.create({
             baseURL: "https://match-masters-174d4-default-rtdb.firebaseio.com",
             headers: {
@@ -113,17 +114,34 @@ export default {
             },
           });
           this.isLoading = true;
-          instance
-            .post("/scores.json", {
-              nickname: this.$store.state.nickname,
-              score: this.$store.state.score,
-            })
-            .then((response) => {
-              console.log(response);
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+
+          if (this.scoreKey !== undefined) {
+            instance
+              .put("/scores.json", {
+                [this.scoreKey]: {
+                  nickname: this.$store.state.nickname,
+                  score: score,
+                },
+              })
+              .then((response) => {
+                console.log(response);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          } else {
+            instance
+              .post("/scores.json", {
+                nickname: this.$store.state.nickname,
+                score: this.$store.state.score,
+              })
+              .then((response) => {
+                console.log(response);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
         })
         .finally(() => {
           console.log("supa");
@@ -150,7 +168,11 @@ export default {
   },
   mounted() {
     this.startGame();
-    this.$store.dispatch("finalScore");
+    this.$store.dispatch("getScores").then((response) => {
+      this.scoreKey = Object.keys(response).find(
+        (key) => response[key].nickname === this.$store.state.nickname
+      );
+    });
   },
 };
 </script>

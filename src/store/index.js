@@ -127,7 +127,7 @@ const store = createStore({
     },
     restartTimer(state) {
       const time = new Date();
-      time.setSeconds(time.getSeconds() + 120);
+      time.setSeconds(time.getSeconds() + 30);
       state.stopwatch.restart(time);
     },
     addTime(state) {
@@ -181,7 +181,7 @@ const store = createStore({
       let score = context.state.score - context.state.moves;
       return new Promise((resolve, reject) => {
         context.commit("finalScore", score);
-        resolve();
+        resolve(score);
       });
     },
     setNickname(context, payload) {
@@ -223,7 +223,7 @@ const store = createStore({
           .get("/scores.json")
           .then((response) => {
             context.commit("setScores", Object.values(response.data));
-            resolve();
+            resolve(response.data);
           })
           .catch((error) => {
             console.log(error);

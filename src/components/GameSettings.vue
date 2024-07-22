@@ -79,10 +79,6 @@ export default {
   methods: {
     verifyNickname() {
       if (this.$store.state.gameMode === "compete") {
-        let nicknames = [...this.$store.state.scoresList].map(
-          (el) => el.nickname
-        );
-
         this.nickname.trim() === ""
           ? (this.startPossible = false)
           : (this.startPossible = true);
