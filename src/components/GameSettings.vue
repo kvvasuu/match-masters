@@ -49,6 +49,7 @@
           id="nickname"
           maxlength="16"
           v-model="nickname"
+          autocomplete="off"
         />
       </div>
     </div>
@@ -88,7 +89,7 @@ export default {
       if (this.$store.state.gameMode === "compete") {
         this.difficulty = "3";
         this.setDifficulty();
-        this.setNickaname();
+        this.setNickname();
         this.$store.dispatch("setGameState", true);
       } else {
         this.$store.dispatch("setGameState", true);
@@ -104,14 +105,16 @@ export default {
     setCategory(value) {
       this.$store.dispatch("setCategory", value.target.value);
     },
-    setNickaname() {
+    setNickname() {
       this.$store.dispatch("setNickname", this.nickname);
+      localStorage.setItem("nickname", this.nickname);
     },
   },
   mounted() {
     if (this.$store.state.gameMode === "compete") {
       this.startPossible = false;
       this.$store.dispatch("getScores");
+      this.nickname = localStorage.getItem("nickname");
     }
   },
 };

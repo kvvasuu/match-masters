@@ -127,7 +127,7 @@ const store = createStore({
     },
     restartTimer(state) {
       const time = new Date();
-      time.setSeconds(time.getSeconds() + 30);
+      time.setSeconds(time.getSeconds() + 90);
       state.stopwatch.restart(time);
     },
     addTime(state) {
