@@ -179,6 +179,7 @@ const store = createStore({
     },
     finalScore(context) {
       let score = context.state.score - context.state.moves;
+      if (score <= 0) score = 0;
       return new Promise((resolve, reject) => {
         context.commit("finalScore", score);
         resolve(score);

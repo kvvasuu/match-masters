@@ -40,6 +40,7 @@ export default {
       round: 0,
       gameEnded: false,
       scoreKey: "",
+      playerHighscore: 0,
     };
   },
   watch: {
@@ -116,17 +117,18 @@ export default {
           this.isLoading = true;
 
           if (this.scoreKey !== undefined) {
-            instance
-              .put(`/scores/${this.scoreKey}.json`, {
-                nickname: this.$store.state.nickname,
-                score: score,
-              })
-              .then((response) => {
-                console.log(response);
-              })
-              .catch((error) => {
-                console.log(error);
-              });
+            if (this.playerHighscore < score)
+              instance
+                .put(`/scores/${this.scoreKey}.json`, {
+                  nickname: this.$store.state.nickname,
+                  score: score,
+                })
+                .then((response) => {
+                  console.log(response);
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
           } else {
             instance
               .post("/scores.json", {
@@ -143,7 +145,7 @@ export default {
         })
         .finally(() => {
           console.log("supa");
-          this.gameEnded = true;
+          this.isLoading = false;
         });
     },
     goBack() {
@@ -170,6 +172,7 @@ export default {
       this.scoreKey = Object.keys(response).find(
         (key) => response[key].nickname === this.$store.state.nickname
       );
+      this.playerHighscore = response[scoreKey].score;
     });
   },
 };
