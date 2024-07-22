@@ -1,5 +1,6 @@
 import { createStore } from "vuex";
 import { useTimer } from "vue-timer-hook";
+import axios from "axios";
 
 const store = createStore({
   state() {
@@ -17,6 +18,7 @@ const store = createStore({
       difficulty: "1", //1 - easy, 2 - medium, 3 - hard
       gameMode: "", // practice or compete
       category: "animals", // "animals" is default
+      scoresList: [],
       availableCards: {
         animals: [
           "bee",
@@ -125,7 +127,7 @@ const store = createStore({
     },
     restartTimer(state) {
       const time = new Date();
-      time.setSeconds(time.getSeconds() + 30);
+      time.setSeconds(time.getSeconds() + 120);
       state.stopwatch.restart(time);
     },
     addTime(state) {
@@ -146,6 +148,9 @@ const store = createStore({
     },
     setCategory(state, payload) {
       state.category = payload;
+    },
+    setScores(state, payload) {
+      state.scoresList = payload;
     },
   },
   actions: {
@@ -205,6 +210,26 @@ const store = createStore({
       context.commit("setSecondCard", "");
       context.commit("resetScore");
       context.commit("resetMoves");
+    },
+    async getScores(context) {
+      const instance = axios.create({
+        baseURL: "https://match-masters-174d4-default-rtdb.firebaseio.com",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return new Promise((resolve, reject) => {
+        instance
+          .get("/scores.json")
+          .then((response) => {
+            context.commit("setScores", Object.values(response.data));
+            resolve();
+          })
+          .catch((error) => {
+            console.log(error);
+            reject();
+          });
+      });
     },
   },
 });

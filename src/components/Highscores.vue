@@ -1,53 +1,46 @@
 <template>
   <div class="highscores">
     <div class="title">Top Players</div>
-    <ul>
-      <li
-        v-for="(score, index) in topScoresList"
-        v-if="scoresList.length !== 0"
-        :class="{ you: $store.state.nickname === score.nickname }"
-      >
-        <div class="position">{{ index + 1 }}</div>
-        <div class="nickname">{{ score.nickname }}</div>
-        <div class="score">{{ score.score }}</div>
-      </li>
-      <li v-else style="justify-content: center">No data</li>
-    </ul>
+    <Transition name="fade" mode="out-in">
+      <ul>
+        <div v-if="isLoading">Loading</div>
+        <li
+          v-for="(score, index) in topScoresList"
+          v-else
+          :class="{ you: $store.state.nickname === score.nickname }"
+        >
+          <div class="position">{{ index + 1 }}</div>
+          <div class="nickname">{{ score.nickname }}</div>
+          <div class="score">{{ score.score }}</div>
+        </li>
+      </ul>
+    </Transition>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   props: ["scoresAmount"],
   data() {
     return {
-      isLoading: false,
-      scoresList: [],
+      isLoading: true,
     };
   },
   computed: {
     topScoresList() {
-      return this.scoresList
+      return this.$store.state.scoresList
         .sort((a, b) => b.score - a.score)
         .slice(0, this.scoresAmount);
     },
   },
   methods: {
-    getScores() {
-      fetch("https://match-masters-174d4-default-rtdb.firebaseio.com/scores/");
-      /* axios
-        .get("https://match-masters-174d4-default-rtdb.firebaseio.com/scores/")
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        }); */
+    async getScores() {
+      this.isLoading = true;
+      await this.$store.dispatch("getScores").then(() => {
+        this.isLoading = false;
+      });
     },
   },
-
   mounted() {
     this.getScores();
   },
@@ -85,6 +78,11 @@ ul {
   padding: 0;
   margin: 0;
   width: 100%;
+  min-height: 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 li {

@@ -106,22 +106,26 @@ export default {
       await this.$store
         .dispatch("finalScore")
         .then(() => {
-          axios
-            .post(
-              "https://match-masters-174d4-default-rtdb.firebaseio.com/scores/",
-              {
-                nickname: this.$store.state.nickname,
-                score: this.$store.state.score,
-              }
-            )
-            .then(function (response) {
+          const instance = axios.create({
+            baseURL: "https://match-masters-174d4-default-rtdb.firebaseio.com",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          this.isLoading = true;
+          instance
+            .post("/scores.json", {
+              nickname: this.$store.state.nickname,
+              score: this.$store.state.score,
+            })
+            .then((response) => {
               console.log(response);
             })
-            .catch(function (error) {
+            .catch((error) => {
               console.log(error);
             });
         })
-        .finally(function () {
+        .finally(() => {
           console.log("supa");
           this.gameEnded = true;
         });
