@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import { useTimer } from "vue-timer-hook";
 import axios from "axios";
+import availableCards from "./availableCards.json";
 
 const store = createStore({
   state() {
@@ -19,41 +20,7 @@ const store = createStore({
       gameMode: "", // practice or compete
       category: "animals", // "animals" is default
       scoresList: [],
-      availableCards: {
-        animals: [
-          "bee",
-          "dolphin",
-          "elephant",
-          "frog",
-          "hog",
-          "snail",
-          "tiger",
-          "cat",
-          "dog",
-          "cow",
-          "turtle",
-          "bird",
-          "deer",
-          "monkey",
-        ],
-        food: [
-          "apple",
-          "carrot",
-          "pear",
-          "banana",
-          "coconut",
-          "pineapple",
-          "watermelon",
-          "cherry",
-          "pumpkin",
-          "pepper",
-          "cabbage",
-          "tomato",
-          "corn",
-          "onion",
-        ],
-        /* space: [], */
-      },
+      availableCards: availableCards,
     };
   },
   getters: {

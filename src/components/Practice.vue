@@ -83,6 +83,7 @@ export default {
       this.$store.commit("setFirstCard", "");
       this.$store.commit("setSecondCard", "");
       this.$store.dispatch("addTime");
+      this.$store.commit("stepReset");
     },
     async endGame() {
       this.gameEnded = true;

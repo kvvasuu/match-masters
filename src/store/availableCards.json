@@ -1,0 +1,46 @@
+{
+  "animals": [
+    "bee",
+    "dolphin",
+    "elephant",
+    "frog",
+    "hog",
+    "snail",
+    "tiger",
+    "cat",
+    "dog",
+    "cow",
+    "turtle",
+    "bird",
+    "deer",
+    "monkey"
+  ],
+  "food": [
+    "apple",
+    "carrot",
+    "pear",
+    "banana",
+    "coconut",
+    "pineapple",
+    "watermelon",
+    "cherry",
+    "pumpkin",
+    "pepper",
+    "cabbage",
+    "tomato",
+    "corn",
+    "onion"
+  ],
+  "space": [
+    "sun",
+    "mercury",
+    "venus",
+    "earth",
+    "mars",
+    "saturn",
+    "jupiter",
+    "neptune",
+    "uranus",
+    "moon"
+  ]
+}
