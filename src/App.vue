@@ -2,18 +2,23 @@
   <Transition name="fade" mode="out-in">
     <WelcomeScreen v-if="!$store.state.gameMode"></WelcomeScreen>
     <GameSettings v-else-if="!$store.state.gameStarted"></GameSettings>
-    <Game v-else-if="$store.state.gameStarted"></Game>
+    <component
+      :is="$store.state.gameMode"
+      v-else-if="$store.state.gameStarted"
+    ></component>
   </Transition>
 </template>
 
 <script>
-import Game from "./components/Game.vue";
+import Compete from "./components/Compete.vue";
+import Practice from "./components/Practice.vue";
 import GameSettings from "./components/GameSettings.vue";
 import WelcomeScreen from "./components/WelcomeScreen.vue";
 
 export default {
   components: {
-    Game,
+    Compete,
+    Practice,
     WelcomeScreen,
     GameSettings,
   },

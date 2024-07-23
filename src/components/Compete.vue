@@ -12,7 +12,9 @@
         :key="currentCards"
       ></Board>
       <GameResults
-        v-else-if="gameEnded && $store.state.gameMode === 'compete'"
+        v-else-if="
+          gameEnded && $store.state.gameMode === 'compete' && !isLoading
+        "
       ></GameResults>
     </Transition>
     <button class="icon back-btn" @click="goBack" title="BACK">
@@ -24,7 +26,6 @@
 <script>
 import Scoreboard from "./Scoreboard.vue";
 import Board from "./Board.vue";
-import GameSettings from "./GameSettings.vue";
 import GameResults from "./GameResults.vue";
 import axios from "axios";
 
@@ -32,7 +33,6 @@ export default {
   components: {
     Scoreboard,
     Board,
-    GameSettings,
     GameResults,
   },
   data() {
@@ -43,6 +43,7 @@ export default {
       gameEnded: false,
       scoreKey: "",
       playerHighscore: 0,
+      isLoading: false,
     };
   },
   watch: {

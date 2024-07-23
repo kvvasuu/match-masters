@@ -114,7 +114,10 @@ export default {
     if (this.$store.state.gameMode === "compete") {
       this.startPossible = false;
       this.$store.dispatch("getScores");
-      this.nickname = localStorage.getItem("nickname");
+      if (localStorage.getItem("nickname") !== null) {
+        this.nickname = localStorage.getItem("nickname");
+      }
+      this.verifyNickname();
     }
   },
 };
