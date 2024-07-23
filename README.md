@@ -4,8 +4,6 @@
 
 ## :globe_with_meridians: General info
 
-**Match Masters: Test Your Memory Skills!**
-
 Dive into Match Masters, the ultimate memory cards game! Challenge yourself with various difficulty levels, from Easy to Hard, and sharpen your mind while having fun. Whether you're practicing solo or competing against others, Match Masters offers an exciting and rewarding experience for players of all ages. Match the pairs, earn points, and become a master of memory!
 
 The application has been deployed on Netlify - [https://kvvasu-match-masters.netlify.app/](https://kvvasu-match-masters.netlify.app/)
