@@ -1,6 +1,6 @@
 # Match Masters <img src="https://raw.githubusercontent.com/kvvasuu/match-masters/main/public/favicon.ico" alt="icon" width="24"/>
 
-<!-- ![App demo](https://raw.githubusercontent.com/kvvasuu/breeze-buddy/main/demo.gif "App demo") -->
+![App demo](https://raw.githubusercontent.com/kvvasuu/match-masters/main/demo.gif "App demo")
 
 ## :globe_with_meridians: General info
 
@@ -18,7 +18,7 @@ The application has been deployed on Netlify - [https://kvvasu-match-masters.net
 2. **🎮Practice Mode:** In Practice mode, you can hone your skills without the pressure of time. Select the difficulty level that suits you:<br>
 
    **📊Difficulty Levels:**<br>
-  
+
    Easy:
    <ul>
       <li>🔲Grid size: 3️⃣ x 4️⃣</li>
