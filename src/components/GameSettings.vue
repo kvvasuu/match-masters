@@ -39,7 +39,7 @@
       </div>
     </div>
     <div class="compete-settings" v-else>
-      <Highscores :scores-amount="3"></Highscores>
+      <Highscores :scores-amount="10"></Highscores>
       <div class="nickname cont">
         <label for="nickname">Nickname:</label>
         <input

@@ -1,6 +1,6 @@
 <template>
   <div class="game-cont">
-    <Highscores :scores-amount="10"></Highscores>
+    <Highscores></Highscores>
   </div>
 </template>
 

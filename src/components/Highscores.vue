@@ -30,7 +30,7 @@ export default {
     topScoresList() {
       return this.$store.state.scoresList
         .sort((a, b) => b.score - a.score)
-        .slice(0, this.scoresAmount);
+        .slice(0, this.scoresAmount ? this.scoresAmount : 200);
     },
   },
   methods: {
@@ -48,13 +48,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$primary-color: #ffbf00;
+$secondary-color: #808836;
+
 .highscores {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
-  background-color: #ffbf00;
-  border: 0.34rem solid #808836;
+  background-color: $primary-color;
+  border: 0.34rem solid $secondary-color;
   border-radius: 1rem;
   width: 17rem;
   margin: 0 0 2rem 0;
@@ -67,7 +70,7 @@ export default {
     color: #4d5221;
     letter-spacing: 2px;
     padding: 1rem 1.6rem 0.4rem 1.6rem;
-    border-bottom: 0.34rem solid #808836;
+    border-bottom: 0.34rem solid $secondary-color;
     width: 100%;
     box-sizing: border-box;
   }
@@ -79,10 +82,26 @@ ul {
   margin: 0;
   width: 100%;
   min-height: 10rem;
+  max-height: 15.7rem;
+  margin: 0.3rem 0;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: $primary-color;
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $secondary-color;
+    border-radius: 5px;
+    border: 1px solid $primary-color;
+  }
 }
 
 li {
