@@ -116,7 +116,7 @@ export default {
 <style lang="scss" scoped>
 .board {
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
