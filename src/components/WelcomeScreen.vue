@@ -1,7 +1,9 @@
 <template>
   <div class="welcome-screen">
     <div class="logo">
-      <img src="../../logo.png" alt="Match Masters" draggable="false" />
+      <a href="https://github.com/kvvasuu/match-masters"
+        ><img src="../../logo.png" alt="Match Masters" draggable="false"
+      /></a>
     </div>
     <div class="buttons">
       <button
@@ -48,9 +50,14 @@ export default {
 }
 
 .logo {
+  transition: all 0.3s ease;
+  &:hover {
+    transform: scale(1.02);
+  }
   img {
     height: 100%;
     width: 100%;
+    cursor: pointer;
   }
 }
 
