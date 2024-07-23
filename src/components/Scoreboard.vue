@@ -36,6 +36,8 @@ export default {
   justify-content: space-between;
   background-color: #ffbf00;
   border-bottom: 0.34rem solid #808836;
+  font-family: SuperCorn;
+  color: #4d5221;
 }
 
 .container {
