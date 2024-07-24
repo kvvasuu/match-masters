@@ -1,13 +1,20 @@
 <template>
   <div class="board">
-    <Scoreboard v-if="!gameEnded"></Scoreboard>
+    <Countdown
+      @start-game="gameStarted = !gameStarted"
+      v-if="!gameStarted"
+    ></Countdown>
+    <Scoreboard v-if="!gameEnded && gameStarted"></Scoreboard>
     <Transition name="fade" mode="out-in">
       <Board
         :current-cards="currentCards"
         :pairs="pairsAmount"
         @next-round="nextRound"
         v-if="
-          $store.state.gameStarted && currentCards.length != 0 && !gameEnded
+          gameStarted &&
+          $store.state.gameStarted &&
+          currentCards.length != 0 &&
+          !gameEnded
         "
         :key="currentCards"
       ></Board>
@@ -17,7 +24,12 @@
         "
       ></GameResults>
     </Transition>
-    <button class="icon back-btn" @click="goBack" title="BACK">
+    <button
+      class="icon back-btn"
+      @click="goBack"
+      title="BACK"
+      v-if="gameStarted"
+    >
       <i class="fa-solid fa-arrow-left"></i>
     </button>
   </div>
@@ -28,12 +40,14 @@ import Scoreboard from "./Scoreboard.vue";
 import Board from "./Board.vue";
 import GameResults from "./GameResults.vue";
 import axios from "axios";
+import Countdown from "./Countdown.vue";
 
 export default {
   components: {
     Scoreboard,
     Board,
     GameResults,
+    Countdown,
   },
   data() {
     return {
@@ -44,6 +58,7 @@ export default {
       scoreKey: "",
       playerHighscore: 0,
       isLoading: false,
+      gameStarted: false,
     };
   },
   watch: {
@@ -95,7 +110,6 @@ export default {
     },
     startGame() {
       this.nextRound();
-      this.$store.dispatch("restartTimer");
       this.$store.commit("stepReset");
       this.gameOver = false;
       this.$store.commit("setGameState", true);

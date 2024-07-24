@@ -14,9 +14,6 @@
 
 <script>
 export default {
-  data() {
-    return {};
-  },
   computed: {
     getTime() {
       return `${this.$store.getters.getTime.minutes}:${this.$store.getters.getTime.seconds}`;
