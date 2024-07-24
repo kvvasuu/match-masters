@@ -24,7 +24,6 @@ export default {
       this.timer = 3;
       const interval = setInterval(() => {
         this.timer--;
-        console.log(this.timer);
       }, 1000);
       setTimeout(() => {
         this.$store.dispatch("restartTimer");

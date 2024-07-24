@@ -4,7 +4,9 @@
       @start-game="gameStarted = !gameStarted"
       v-if="!gameStarted"
     ></Countdown>
-    <Scoreboard v-if="!gameEnded && gameStarted"></Scoreboard>
+    <Transition name="fade" mode="out-in">
+      <Scoreboard v-if="!gameEnded && gameStarted"></Scoreboard>
+    </Transition>
     <Transition name="fade" mode="out-in">
       <Board
         :current-cards="currentCards"
@@ -22,6 +24,7 @@
         v-else-if="
           gameEnded && $store.state.gameMode === 'compete' && !isLoading
         "
+        @start-game="startGame"
       ></GameResults>
     </Transition>
     <button
@@ -109,9 +112,10 @@ export default {
       );
     },
     startGame() {
+      this.gameStarted = false;
+      this.gameEnded = false;
       this.nextRound();
       this.$store.commit("stepReset");
-      this.gameOver = false;
       this.$store.commit("setGameState", true);
     },
     nextRound() {
