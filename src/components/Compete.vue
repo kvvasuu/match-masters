@@ -173,8 +173,16 @@ export default {
         });
     },
     goBack() {
-      this.$store.commit("setGameState", false);
-      this.$store.dispatch("resetState");
+      if (!this.gameEnded) {
+        const conf = confirm("Are you sure you want to leave?");
+        if (conf) {
+          this.$store.commit("setGameState", false);
+          this.$store.dispatch("resetState");
+        }
+      } else {
+        this.$store.commit("setGameState", false);
+        this.$store.dispatch("resetState");
+      }
     },
     setPairsAmount() {
       switch (this.$store.state.difficulty) {
@@ -189,6 +197,12 @@ export default {
           break;
       }
     },
+    handleBeforeUnload(event) {
+      const message = "Are you sure you want to leave?";
+      event.preventDefault();
+      event.returnValue = message;
+      return message;
+    },
   },
   mounted() {
     this.startGame();
@@ -198,6 +212,10 @@ export default {
       );
       this.playerHighscore = response[this.scoreKey].score;
     });
+    window.addEventListener("beforeunload", this.handleBeforeUnload);
+  },
+  beforeUnmount() {
+    window.removeEventListener("beforeunload", this.handleBeforeUnload);
   },
 };
 </script>
